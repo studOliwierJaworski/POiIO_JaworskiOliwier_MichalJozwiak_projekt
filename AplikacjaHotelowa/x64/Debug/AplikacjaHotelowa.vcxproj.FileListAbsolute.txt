@@ -1,0 +1,4 @@
+C:\Users\jawor\Downloads\POiIO_JaworskiOliwier_MichalJozwiak_projekt-feature-zameldowania\AplikacjaHotelowa\x64\Debug\AplikacjaHotelowa.vcxproj.AssemblyReference.cache
+C:\Users\jawor\Downloads\POiIO_JaworskiOliwier_MichalJozwiak_projekt-feature-zameldowania\AplikacjaHotelowa\x64\Debug\AplikacjaHotelowa.Home.resources
+C:\Users\jawor\Downloads\POiIO_JaworskiOliwier_MichalJozwiak_projekt-feature-zameldowania\AplikacjaHotelowa\x64\Debug\AplikacjaHotelowa.TworzenieRezerwacjiForm.resources
+C:\Users\jawor\Downloads\POiIO_JaworskiOliwier_MichalJozwiak_projekt-feature-zameldowania\AplikacjaHotelowa\x64\Debug\AplikacjaHotelowa.vcxproj.GenerateResource.cache
