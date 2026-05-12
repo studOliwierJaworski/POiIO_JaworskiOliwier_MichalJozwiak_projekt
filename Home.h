@@ -1,5 +1,7 @@
 #pragma once
 #include "TworzenieRezerwacjiForm.h"
+#include "RezerwacjaService.h"
+#include "ZameldowaniaListaForm.h"
 
 namespace AplikacjaHotelowa {
 
@@ -22,6 +24,9 @@ namespace AplikacjaHotelowa {
 			//
 			//TODO: W tym miejscu dodaj kod konstruktora
 			//
+			// baza danych SQLite
+			AplikacjaHotelowa::RezerwacjaService::InitializeBase();
+			 
 			// konfiguracja kolumn wiadomoœci
 			this->dgvWiadomosci->ColumnCount = 3;
 			this->dgvWiadomosci->Columns[0]->Name = L"Data";
@@ -320,7 +325,8 @@ namespace AplikacjaHotelowa {
 	private:
 		System::Void btnZameldowania_Click(System::Object^ sender, System::EventArgs^ e)
 		{
-			MessageBox::Show(L"Modu³ zameldowañ - w przygotowaniu.", L"Zameldowania", MessageBoxButtons::OK, MessageBoxIcon::Information);
+			ZameldowaniaListaForm^ listaForm = gcnew ZameldowaniaListaForm();
+			listaForm->ShowDialog();
 		}
 		
 		System::Void btnWymeldowania_Click(System::Object^ sender, System::EventArgs^ e)
