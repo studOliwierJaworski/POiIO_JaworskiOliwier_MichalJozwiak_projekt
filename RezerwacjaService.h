@@ -66,26 +66,56 @@ namespace AplikacjaHotelowa {
             List<Rezerwacja^>^ lista = gcnew List<Rezerwacja^>();
             SQLiteConnection^ conn = gcnew SQLiteConnection(connectionString);
 
-                try {
-                    conn->Open();
-                    String^ sql = "SELECT Imie, Nazwisko, Pokoj, DataOd, DataDo FROM Rezerwacje";
-                    SQLiteCommand^ cmd = gcnew SQLiteCommand(sql, conn);
-                    SQLiteDataReader^ reader = cmd->ExecuteReader();
+            try {
+                conn->Open();
+                String^ sql = "SELECT Imie, Nazwisko, Pokoj, DataOd, DataDo FROM Rezerwacje";
+                SQLiteCommand^ cmd = gcnew SQLiteCommand(sql, conn);
+                SQLiteDataReader^ reader = cmd->ExecuteReader();
 
-                    while (reader->Read()) {
-                        Rezerwacja^ r = gcnew Rezerwacja();
-                        r->Imie = reader["Imie"]->ToString();
-                        r->Nazwisko = reader["Nazwisko"]->ToString();
-                        r->Pokoj = Convert::ToInt32(reader["Pokoj"]);
-                        r->DataOd = DateTime::Parse(reader["DataOd"]->ToString());
-                        r->DataDo = DateTime::Parse(reader["DataDo"]->ToString());
-                        lista->Add(r);
-                    }
+                while (reader->Read()) {
+                    Rezerwacja^ r = gcnew Rezerwacja();
+                    r->Imie = reader["Imie"]->ToString();
+                    r->Nazwisko = reader["Nazwisko"]->ToString();
+                    r->Pokoj = Convert::ToInt32(reader["Pokoj"]);
+                    r->DataOd = DateTime::Parse(reader["DataOd"]->ToString());
+                    r->DataDo = DateTime::Parse(reader["DataDo"]->ToString());
+                    lista->Add(r);
                 }
-                finally {
-                    conn->Close();
-                }
-                return lista;
             }
+            finally {
+                conn->Close();
+            }
+            return lista;
+        }
+
+        static List<Rezerwacja^>^ PobierzWymeldowaniaNaDzien(DateTime data) {
+            List<Rezerwacja^>^ lista = gcnew List<Rezerwacja^>();
+            SQLiteConnection^ conn = gcnew SQLiteConnection(connectionString);
+
+            try {
+                conn->Open();
+                // Pobieramy rezerwacje, które kończą się (wymeldowanie) wybranego dnia
+                String^ sql = "SELECT Imie, Nazwisko, Pokoj, DataOd, DataDo FROM Rezerwacje WHERE DataDo = @data";
+                SQLiteCommand^ cmd = gcnew SQLiteCommand(sql, conn);
+
+                cmd->Parameters->AddWithValue("@data", data.ToString("yyyy-MM-dd"));
+                SQLiteDataReader^ reader = cmd->ExecuteReader();
+
+                while (reader->Read()) {
+                    Rezerwacja^ r = gcnew Rezerwacja();
+                    r->Imie = reader["Imie"]->ToString();
+                    r->Nazwisko = reader["Nazwisko"]->ToString();
+                    r->Pokoj = Convert::ToInt32(reader["Pokoj"]);
+                    r->DataOd = DateTime::Parse(reader["DataOd"]->ToString());
+                    r->DataDo = DateTime::Parse(reader["DataDo"]->ToString());
+                    lista->Add(r);
+                }
+            }
+            finally {
+                conn->Close();
+            }
+            return lista;
+        }
+    
     };
 }

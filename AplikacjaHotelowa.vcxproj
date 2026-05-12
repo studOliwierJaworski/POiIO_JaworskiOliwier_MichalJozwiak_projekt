@@ -125,6 +125,7 @@
   <ItemGroup>
     <ClCompile Include="Home.cpp" />
     <ClCompile Include="TworzenieRezerwacjiForm.cpp" />
+    <ClCompile Include="WymeldowaniaListaForm.cpp" />
     <ClCompile Include="ZameldowaniaListaForm.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -136,6 +137,9 @@
     </ClInclude>
     <ClInclude Include="Rezerwacja.h" />
     <ClInclude Include="RezerwacjaService.h" />
+    <ClInclude Include="WymeldowaniaListaForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="ZameldowaniaListaForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>

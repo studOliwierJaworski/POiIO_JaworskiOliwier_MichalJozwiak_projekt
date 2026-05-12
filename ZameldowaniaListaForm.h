@@ -57,6 +57,10 @@ namespace AplikacjaHotelowa {
 			this->dgvLista->Columns[1]->Name = L"Pokój";
 			this->dgvLista->Columns[2]->Name = L"Data Od";
 			this->dgvLista->Columns[3]->Name = L"Data Do";
+			this->dgvLista->RowTemplate->Height = 40;
+			this->dgvLista->ColumnHeadersHeight = 45;
+			this->dgvLista->DefaultCellStyle->Font = (gcnew System::Drawing::Font(L"Segoe UI", 12));
+			this->dgvLista->ColumnHeadersDefaultCellStyle->Font = (gcnew System::Drawing::Font(L"Segoe UI", 12, System::Drawing::FontStyle::Bold));
 			this->dgvLista->AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode::Fill;
 			this->dgvLista->ReadOnly = true;
 			this->dgvLista->AllowUserToAddRows = false;

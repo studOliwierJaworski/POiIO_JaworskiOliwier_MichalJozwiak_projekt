@@ -2,6 +2,7 @@
 #include "TworzenieRezerwacjiForm.h"
 #include "RezerwacjaService.h"
 #include "ZameldowaniaListaForm.h"
+#include "WymeldowaniaListaForm.h"
 
 namespace AplikacjaHotelowa {
 
@@ -331,7 +332,8 @@ namespace AplikacjaHotelowa {
 		
 		System::Void btnWymeldowania_Click(System::Object^ sender, System::EventArgs^ e)
 		{
-			MessageBox::Show(L"Modu³ wymeldowañ - w przygotowaniu.", L"Wymeldowania", MessageBoxButtons::OK, MessageBoxIcon::Information);
+			WymeldowaniaListaForm^ wymeldowaniaForm = gcnew WymeldowaniaListaForm();
+			wymeldowaniaForm->ShowDialog();
 		}
 
 		System::Void btnCzystosc_Click(System::Object^ sender, System::EventArgs^ e)
