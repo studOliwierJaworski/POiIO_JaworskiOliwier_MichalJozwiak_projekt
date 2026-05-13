@@ -288,6 +288,23 @@ private: System::Void btnZapisz_Click(System::Object^ sender, System::EventArgs^
 	r->DataOd = dtpOd->Value;
 	r->DataDo = dtpDo->Value;
 	r->StanCzystosci = "Czysty";
+	//walidacja konfliktu rezerwacji.
+	bool dostepny =
+		RezerwacjaService::CzyPokojDostepny(
+			r->Pokoj,
+			r->DataOd,
+			r->DataDo);
+
+	if (!dostepny)
+	{
+		MessageBox::Show(
+			L"Pokój jest ju¿ zarezerwowany w tym terminie.",
+			L"B³¹d rezerwacji",
+			MessageBoxButtons::OK,
+			MessageBoxIcon::Warning);
+
+		return;
+	}
 	RezerwacjaService::Dodaj(r);
 
 	MessageBox::Show("Utworzono!");

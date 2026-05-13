@@ -61,9 +61,53 @@ namespace AplikacjaHotelowa {
                 conn->Close();
             }
         }
+        //  walidacja konfliktu rezerwacji.
+        static bool CzyPokojDostepny(
+            int pokoj,
+            DateTime dataOd,
+            DateTime dataDo)
+        {
+            SQLiteConnection^ conn =
+                gcnew SQLiteConnection(connectionString);
 
+            try
+            {
+                conn->Open();
+
+                String^ sql =
+                    "SELECT COUNT(*) FROM Rezerwacje "
+                    "WHERE Pokoj = @pokoj "
+                    "AND ("
+                    "(@od BETWEEN DataOd AND DataDo) OR "
+                    "(@do BETWEEN DataOd AND DataDo) OR "
+                    "(DataOd BETWEEN @od AND @do)"
+                    ")";
+
+                SQLiteCommand^ cmd =
+                    gcnew SQLiteCommand(sql, conn);
+
+                cmd->Parameters->AddWithValue("@pokoj", pokoj);
+
+                cmd->Parameters->AddWithValue(
+                    "@od",
+                    dataOd.ToString("yyyy-MM-dd"));
+
+                cmd->Parameters->AddWithValue(
+                    "@do",
+                    dataDo.ToString("yyyy-MM-dd"));
+
+                int count = Convert::ToInt32(
+                    cmd->ExecuteScalar());
+
+                return count == 0;
+            }
+            finally
+            {
+                conn->Close();
+            }
+        }
         static List<Rezerwacja^>^ PobierzWszystkie() {
-
+         
             List<Rezerwacja^>^ lista = gcnew List<Rezerwacja^>();
             SQLiteConnection^ conn = gcnew SQLiteConnection(connectionString);
 
