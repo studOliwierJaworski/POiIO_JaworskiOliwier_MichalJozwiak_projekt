@@ -3,7 +3,8 @@
 #include "RezerwacjaService.h"
 #include "ZameldowaniaListaForm.h"
 #include "WymeldowaniaListaForm.h"
-
+#include "PobudkaService.h"
+#include "PanelPokojuForm.h"
 namespace AplikacjaHotelowa {
 
 	using namespace System;
@@ -19,6 +20,27 @@ namespace AplikacjaHotelowa {
 	public ref class Home : public System::Windows::Forms::Form
 	{
 	public:
+
+		void OdswiezListePobudek()
+		{
+			dgvBudzenia->Rows->Clear();
+
+			List<Pobudka^>^ lista =
+				PobudkaService::PobierzWszystkie();
+
+			for each (Pobudka ^ p in lista)
+			{
+				array<String^>^ row =
+				{
+					p->Pokoj.ToString(),
+					p->Godzina,
+					"Aktywna"
+				};
+
+				dgvBudzenia->Rows->Add(row);
+			}
+		}
+	public:
 		Home(void)
 		{
 			InitializeComponent();
@@ -27,7 +49,8 @@ namespace AplikacjaHotelowa {
 			//
 			// baza danych SQLite
 			AplikacjaHotelowa::RezerwacjaService::InitializeBase();
-			 
+			PobudkaService::InitializeBase();
+
 			// konfiguracja kolumn wiadomo쐁i
 			this->dgvWiadomosci->ColumnCount = 3;
 			this->dgvWiadomosci->Columns[0]->Name = L"Data";
@@ -45,6 +68,7 @@ namespace AplikacjaHotelowa {
 			this->dgvBudzenia->Columns[1]->Width = 90;
 			this->dgvBudzenia->Columns[2]->Name = L"Status";
 			this->dgvBudzenia->Columns[2]->AutoSizeMode = System::Windows::Forms::DataGridViewAutoSizeColumnMode::Fill;
+			OdswiezListePobudek();
 
 		}
 
@@ -64,25 +88,29 @@ namespace AplikacjaHotelowa {
 
 
 
-	private: 
-		   System::Windows::Forms::PictureBox^ pictureBox2;
-		   System::Windows::Forms::Button^ btnRezerwacje;
-		   System::ComponentModel::Container^ components;
-		   System::Windows::Forms::PictureBox^ pictureBox1;
-		   System::Windows::Forms::Button^ btnZameldowania;
-		   System::Windows::Forms::Button^ btnWymeldowania;
-		   System::Windows::Forms::PictureBox^ pictureBox3;
-	       System::Windows::Forms::PictureBox^ pictureBox4;
-		   System::Windows::Forms::Button^ btnCzystosc;
+	private:
+		System::Windows::Forms::PictureBox^ pictureBox2;
+		System::Windows::Forms::Button^ btnRezerwacje;
+		System::ComponentModel::Container^ components;
+		System::Windows::Forms::PictureBox^ pictureBox1;
+		System::Windows::Forms::Button^ btnZameldowania;
+		System::Windows::Forms::Button^ btnWymeldowania;
+		System::Windows::Forms::PictureBox^ pictureBox3;
+		System::Windows::Forms::PictureBox^ pictureBox4;
+		System::Windows::Forms::Button^ btnCzystosc;
 
-		   System::Windows::Forms::Panel^ panelDashboard;
-		   System::Windows::Forms::Label^ lblDashboardTytul;
+		System::Windows::Forms::Panel^ panelDashboard;
+		System::Windows::Forms::Label^ lblDashboardTytul;
 
-		   System::Windows::Forms::Label^ lblWiadomosciTytul;
-		   System::Windows::Forms::DataGridView^ dgvWiadomosci;
+		System::Windows::Forms::Label^ lblWiadomosciTytul;
+		System::Windows::Forms::DataGridView^ dgvWiadomosci;
 
-		   System::Windows::Forms::Label^ lblBudzeniaTytul;
-		   System::Windows::Forms::DataGridView^ dgvBudzenia;
+		System::Windows::Forms::Label^ lblBudzeniaTytul;
+		System::Windows::Forms::DataGridView^ dgvBudzenia;
+		System::Windows::Forms::MenuStrip^ menuStrip1;
+		System::Windows::Forms::ToolStripMenuItem^ menuU퓓tkownikaToolStripMenuItem;
+		System::Windows::Forms::ToolStripMenuItem^ pobytToolStripMenuItem;
+		System::Windows::Forms::ToolStripMenuItem^ panelPokojuToolStripMenuItem;
 
 
 #pragma region Windows Form Designer generated code
@@ -107,6 +135,10 @@ namespace AplikacjaHotelowa {
 			this->pictureBox2 = (gcnew System::Windows::Forms::PictureBox());
 			this->pictureBox3 = (gcnew System::Windows::Forms::PictureBox());
 			this->pictureBox4 = (gcnew System::Windows::Forms::PictureBox());
+			this->menuStrip1 = (gcnew System::Windows::Forms::MenuStrip());
+			this->menuU퓓tkownikaToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->pobytToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->panelPokojuToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox3))->BeginInit();
@@ -290,7 +322,51 @@ namespace AplikacjaHotelowa {
 			this->dgvBudzenia->RowHeadersVisible = false;
 			this->dgvBudzenia->SelectionMode = System::Windows::Forms::DataGridViewSelectionMode::FullRowSelect;
 			this->dgvBudzenia->BackgroundColor = System::Drawing::Color::White;
+			//
+// menuStrip1
+//
+			this->menuStrip1->Items->AddRange(
+				gcnew cli::array< System::Windows::Forms::ToolStripItem^ >(1)
+			{
+				this->menuU퓓tkownikaToolStripMenuItem
+			});
 
+			this->menuStrip1->Location = System::Drawing::Point(0, 0);
+			this->menuStrip1->Name = L"menuStrip1";
+			this->menuStrip1->Size = System::Drawing::Size(1193, 24);
+
+			//
+			// menuU퓓tkownikaToolStripMenuItem
+			//
+			this->menuU퓓tkownikaToolStripMenuItem->DropDownItems->AddRange(
+				gcnew cli::array< System::Windows::Forms::ToolStripItem^ >(1)
+			{
+				this->pobytToolStripMenuItem
+			});
+
+			this->menuU퓓tkownikaToolStripMenuItem->Text = L"Menu u퓓tkownika";
+
+			//
+			// pobytToolStripMenuItem
+			//
+			this->pobytToolStripMenuItem->DropDownItems->AddRange(
+				gcnew cli::array< System::Windows::Forms::ToolStripItem^ >(1)
+			{
+				this->panelPokojuToolStripMenuItem
+			});
+
+			this->pobytToolStripMenuItem->Text = L"Pobyt";
+
+			//
+			// panelPokojuToolStripMenuItem
+			//
+			this->panelPokojuToolStripMenuItem->Text = L"Panel pokoju";
+
+			this->panelPokojuToolStripMenuItem->Click +=
+				gcnew System::EventHandler(
+					this,
+					&Home::panelPokojuToolStripMenuItem_Click
+				);
 			// 
 			// Home
 			// 
@@ -310,8 +386,10 @@ namespace AplikacjaHotelowa {
 			this->Controls->Add(this->dgvWiadomosci);
 			this->Controls->Add(this->lblBudzeniaTytul);
 			this->Controls->Add(this->dgvBudzenia);
+			this->Controls->Add(this->menuStrip1);
 			this->Name = L"Home";
 			this->Text = L"Strona g농wna";
+			this->MainMenuStrip = this->menuStrip1;
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox3))->EndInit();
@@ -329,7 +407,7 @@ namespace AplikacjaHotelowa {
 			ZameldowaniaListaForm^ listaForm = gcnew ZameldowaniaListaForm();
 			listaForm->ShowDialog();
 		}
-		
+
 		System::Void btnWymeldowania_Click(System::Object^ sender, System::EventArgs^ e)
 		{
 			WymeldowaniaListaForm^ wymeldowaniaForm = gcnew WymeldowaniaListaForm();
@@ -338,7 +416,7 @@ namespace AplikacjaHotelowa {
 
 		System::Void btnCzystosc_Click(System::Object^ sender, System::EventArgs^ e)
 		{
-			MessageBox::Show(L"Stan czysto쐁i pokoi - w przygotowaniu.",L"Czysto쒏 pokoi", MessageBoxButtons::OK, MessageBoxIcon::Information);
+			MessageBox::Show(L"Stan czysto쐁i pokoi - w przygotowaniu.", L"Czysto쒏 pokoi", MessageBoxButtons::OK, MessageBoxIcon::Information);
 		}
 
 		System::Void btnRezerwacje_Click(System::Object^ sender, System::EventArgs^ e)
@@ -346,7 +424,18 @@ namespace AplikacjaHotelowa {
 			TworzenieRezerwacjiForm^ form = gcnew TworzenieRezerwacjiForm();
 			form->ShowDialog();
 		}
+	private: System::Void panelPokojuToolStripMenuItem_Click(
+		System::Object^ sender,
+		System::EventArgs^ e)
+	{
+		PanelPokojuForm^ form =
+			gcnew PanelPokojuForm(1);
+
+		form->ShowDialog();
+
+		OdswiezListePobudek();
+	}
 
 
-};
+	};
 }

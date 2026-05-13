@@ -116,7 +116,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.SQLite">
-      <HintPath>..\sqlite\lib\net46\System.Data.SQLite.dll</HintPath>
+      <HintPath>\\Mac\Home\Desktop\stub.system.data.sqlite.core.netframework.1.0.119 (1)\lib\net46\System.Data.SQLite.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
@@ -124,6 +124,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Home.cpp" />
+    <ClCompile Include="PanelPokojuForm.cpp" />
+    <ClCompile Include="Pobudka.cpp" />
     <ClCompile Include="TworzenieRezerwacjiForm.cpp" />
     <ClCompile Include="WymeldowaniaListaForm.cpp" />
     <ClCompile Include="ZameldowaniaListaForm.cpp" />
@@ -132,6 +134,11 @@
     <ClInclude Include="Home.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="PanelPokojuForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="Pobudka.h" />
+    <ClInclude Include="PobudkaService.h" />
     <ClInclude Include="TworzenieRezerwacjiForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
