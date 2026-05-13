@@ -24,6 +24,11 @@ namespace AplikacjaHotelowa {
 
 			numerPokoju = pokoj;
 			numPokoj->Value = pokoj;
+
+			dtpData->MinDate = DateTime::Now.Date;
+
+			dtpData->Value = DateTime::Now.Date;
+
 		}
 
 	protected:
@@ -235,6 +240,17 @@ namespace AplikacjaHotelowa {
 			{
 				MessageBox::Show(
 					"Brak zgodnoœci z list¹ zameldowañ!");
+
+				return;
+			}
+			DateTime dataPobudki =
+				dtpData->Value.Date +
+				dtpGodzina->Value.TimeOfDay;
+
+			if (dataPobudki < DateTime::Now)
+			{
+				MessageBox::Show(
+					"Nie mo¿na ustawiæ pobudki w przesz³oœci!");
 
 				return;
 			}
