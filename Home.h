@@ -5,6 +5,7 @@
 #include "WymeldowaniaListaForm.h"
 #include "PobudkaService.h"
 #include "PanelPokojuForm.h"
+#include "StanCzystosciForm.h"
 namespace AplikacjaHotelowa {
 
 	using namespace System;
@@ -416,7 +417,8 @@ namespace AplikacjaHotelowa {
 
 		System::Void btnCzystosc_Click(System::Object^ sender, System::EventArgs^ e)
 		{
-			MessageBox::Show(L"Stan czystoœci pokoi - w przygotowaniu.", L"Czystoœæ pokoi", MessageBoxButtons::OK, MessageBoxIcon::Information);
+			StanCzystosciForm^ form = gcnew StanCzystosciForm();
+			form->ShowDialog();
 		}
 
 		System::Void btnRezerwacje_Click(System::Object^ sender, System::EventArgs^ e)
@@ -434,8 +436,10 @@ namespace AplikacjaHotelowa {
 		form->ShowDialog();
 
 		OdswiezListePobudek();
-	}
 
+		StanCzystosciForm^ form2 = gcnew StanCzystosciForm();
+		
+	}
 
 	};
 }

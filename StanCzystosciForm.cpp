@@ -1,0 +1,2 @@
+#include "StanCzystosciForm.h"
+

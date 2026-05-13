@@ -26,7 +26,8 @@ namespace AplikacjaHotelowa {
                     "Nazwisko TEXT, "
                     "Pokoj INTEGER, "
                     "DataOd TEXT, "
-                    "DataDo TEXT);";
+                    "DataDo TEXT, "
+                    "StanCzystosci TEXT);";
 
                 SQLiteCommand^ cmd = gcnew SQLiteCommand(sql, conn);
                 cmd->ExecuteNonQuery();
@@ -42,8 +43,8 @@ namespace AplikacjaHotelowa {
 
             try {
                 conn->Open();
-                String^ sql = "INSERT INTO Rezerwacje (Imie, Nazwisko, Pokoj, DataOd, DataDo) "
-                    "VALUES (@imie, @nazwisko, @pokoj, @od, @do)";
+                String^ sql = "INSERT INTO Rezerwacje (Imie, Nazwisko, Pokoj, DataOd, DataDo, StanCzystosci) "
+                    "VALUES (@imie, @nazwisko, @pokoj, @od, @do, @status)";
 
                 SQLiteCommand^ cmd = gcnew SQLiteCommand(sql, conn);
 
@@ -53,7 +54,7 @@ namespace AplikacjaHotelowa {
 
                 cmd->Parameters->AddWithValue("@od", r->DataOd.ToString("yyyy-MM-dd"));
                 cmd->Parameters->AddWithValue("@do", r->DataDo.ToString("yyyy-MM-dd"));
-
+                cmd->Parameters->AddWithValue("@status", r->StanCzystosci);
                 cmd->ExecuteNonQuery();
             }
             finally {
@@ -68,7 +69,7 @@ namespace AplikacjaHotelowa {
 
             try {
                 conn->Open();
-                String^ sql = "SELECT Imie, Nazwisko, Pokoj, DataOd, DataDo FROM Rezerwacje";
+                String^ sql = "SELECT Imie, Nazwisko, Pokoj, DataOd, DataDo, StanCzystosci FROM Rezerwacje";
                 SQLiteCommand^ cmd = gcnew SQLiteCommand(sql, conn);
                 SQLiteDataReader^ reader = cmd->ExecuteReader();
 
@@ -79,6 +80,7 @@ namespace AplikacjaHotelowa {
                     r->Pokoj = Convert::ToInt32(reader["Pokoj"]);
                     r->DataOd = DateTime::Parse(reader["DataOd"]->ToString());
                     r->DataDo = DateTime::Parse(reader["DataDo"]->ToString());
+                    r->StanCzystosci = reader["StanCzystosci"]->ToString();
                     lista->Add(r);
                 }
             }
@@ -95,7 +97,7 @@ namespace AplikacjaHotelowa {
             try {
                 conn->Open();
                 // Pobieramy rezerwacje, które kończą się (wymeldowanie) wybranego dnia
-                String^ sql = "SELECT Imie, Nazwisko, Pokoj, DataOd, DataDo FROM Rezerwacje WHERE DataDo = @data";
+                String^ sql = "SELECT Imie, Nazwisko, Pokoj, DataOd, DataDo, StanCzystosci FROM Rezerwacje WHERE DataDo = @data";
                 SQLiteCommand^ cmd = gcnew SQLiteCommand(sql, conn);
 
                 cmd->Parameters->AddWithValue("@data", data.ToString("yyyy-MM-dd"));
@@ -108,6 +110,7 @@ namespace AplikacjaHotelowa {
                     r->Pokoj = Convert::ToInt32(reader["Pokoj"]);
                     r->DataOd = DateTime::Parse(reader["DataOd"]->ToString());
                     r->DataDo = DateTime::Parse(reader["DataDo"]->ToString());
+                    r->StanCzystosci = reader["StanCzystosci"]->ToString();
                     lista->Add(r);
                 }
             }

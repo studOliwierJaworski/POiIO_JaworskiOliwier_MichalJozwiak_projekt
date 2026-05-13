@@ -10,7 +10,10 @@ namespace AplikacjaHotelowa {
         String^ Imie;
         String^ Nazwisko;
         int Pokoj;
+
         DateTime DataOd;
         DateTime DataDo;
+
+        String^ StanCzystosci;
     };
 }

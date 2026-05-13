@@ -287,7 +287,7 @@ private: System::Void btnZapisz_Click(System::Object^ sender, System::EventArgs^
 	r->Pokoj = (int)numPokoj->Value;
 	r->DataOd = dtpOd->Value;
 	r->DataDo = dtpDo->Value;
-
+	r->StanCzystosci = "Czysty";
 	RezerwacjaService::Dodaj(r);
 
 	MessageBox::Show("Utworzono!");
