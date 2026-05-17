@@ -1,5 +1,6 @@
 #pragma once
 #include "RezerwacjaService.h"
+#include "SzczegolyRezerwacjiForm.h"
 
 namespace AplikacjaHotelowa {
 
@@ -51,9 +52,14 @@ namespace AplikacjaHotelowa {
 
 
 		void KonfigurujTabele() {
-			this->dgvLista->ColumnCount = 2;
-			this->dgvLista->Columns[0]->Name = L"Goœæ";
-			this->dgvLista->Columns[1]->Name = L"Pokój";
+			this->dgvLista->ColumnCount = 5;
+			this->dgvLista->Columns[0]->Name = L"Id";
+			this->dgvLista->Columns[0]->Visible = false;
+
+			this->dgvLista->Columns[1]->Name = L"Goœæ";
+			this->dgvLista->Columns[2]->Name = L"Pokój";
+			this->dgvLista->Columns[3]->Name = L"Status";
+			this->dgvLista->Columns[4]->Name = L"Osoby";
 			this->dgvLista->RowTemplate->Height = 40; 
 			this->dgvLista->ColumnHeadersHeight = 45; 
 			this->dgvLista->DefaultCellStyle->Font = (gcnew System::Drawing::Font(L"Segoe UI", 12)); 
@@ -71,9 +77,14 @@ namespace AplikacjaHotelowa {
 			List<Rezerwacja^>^ rezerwacje = RezerwacjaService::PobierzWymeldowaniaNaDzien(dtpData->Value);
 
 			for each (Rezerwacja ^ r in rezerwacje) {
+				String^ ladnyStatus = (r->StatusRezerwacji == "Oczekujaca") ? L"Oczekuj¹ca" : r->StatusRezerwacji;
+
 				array<String^>^ row = {
+					r->Id.ToString(),
 					r->Imie + " " + r->Nazwisko,
 					r->Pokoj.ToString(),
+					ladnyStatus,
+					r->IloscGosci.ToString()
 				};
 				this->dgvLista->Rows->Add(row);
 			}
@@ -87,6 +98,7 @@ namespace AplikacjaHotelowa {
 		void InitializeComponent(void)
 		{
 			this->dgvLista = (gcnew System::Windows::Forms::DataGridView());
+			this->dgvLista->CellDoubleClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &WymeldowaniaListaForm::dgvLista_CellDoubleClick);
 			this->panelTop = (gcnew System::Windows::Forms::Panel());
 			this->dtpData = (gcnew System::Windows::Forms::DateTimePicker());
 			this->lblData = (gcnew System::Windows::Forms::Label());
@@ -138,6 +150,17 @@ namespace AplikacjaHotelowa {
 
 	private: System::Void dtpData_ValueChanged(System::Object^ sender, System::EventArgs^ e) {
 		OdswiezDane(); // Odœwie¿a tabelê przy zmianie kalendarza
+	}
+
+	private: System::Void dgvLista_CellDoubleClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
+		if (e->RowIndex >= 0) {
+			int wybraneId = Convert::ToInt32(dgvLista->Rows[e->RowIndex]->Cells[L"Id"]->Value);
+			SzczegolyRezerwacjiForm^ szczegolyForm = gcnew SzczegolyRezerwacjiForm(wybraneId);
+			
+			if (szczegolyForm->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
+				OdswiezDane(); // Odœwie¿a listê wymeldowañ po zamkniêciu okna
+			}
+		}
 	}
 	};
 }

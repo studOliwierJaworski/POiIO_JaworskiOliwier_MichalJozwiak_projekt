@@ -1,5 +1,6 @@
 #pragma once
 #include "RezerwacjaService.h"
+#include "SzczegolyRezerwacjiForm.h"
 
 namespace AplikacjaHotelowa {
 
@@ -52,11 +53,16 @@ namespace AplikacjaHotelowa {
 		System::ComponentModel::Container ^components;
 		// Rêczne ustawienie kolumn
 		void KonfigurujTabele() {
-			this->dgvLista->ColumnCount = 4;
-			this->dgvLista->Columns[0]->Name = L"Goœæ";
-			this->dgvLista->Columns[1]->Name = L"Pokój";
-			this->dgvLista->Columns[2]->Name = L"Data Od";
-			this->dgvLista->Columns[3]->Name = L"Data Do";
+			this->dgvLista->ColumnCount = 7;
+			this->dgvLista->Columns[0]->Name = L"Id";
+			this->dgvLista->Columns[0]->Visible = false;	// id do bazy niewidoczne
+			this->dgvLista->Columns[1]->Name = L"Goœæ";
+			this->dgvLista->Columns[2]->Name = L"Pokój";
+			this->dgvLista->Columns[3]->Name = L"Data Od";
+			this->dgvLista->Columns[4]->Name = L"Data Do";
+			this->dgvLista->Columns[5]->Name = L"Status";
+			this->dgvLista->Columns[6]->Name = L"Osoby";
+			this->dgvLista->AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode::Fill;
 			this->dgvLista->RowTemplate->Height = 40;
 			this->dgvLista->ColumnHeadersHeight = 45;
 			this->dgvLista->DefaultCellStyle->Font = (gcnew System::Drawing::Font(L"Segoe UI", 12));
@@ -74,11 +80,17 @@ namespace AplikacjaHotelowa {
 			List<Rezerwacja^>^ rezerwacje = RezerwacjaService::PobierzWszystkie();
 
 			for each (Rezerwacja ^ r in rezerwacje) {
+				// problem z wyœwietleniem ¹ w statusie - naprawiony
+				String^ ladnyStatus = (r->StatusRezerwacji == "Oczekujaca") ? L"Oczekuj¹ca" : r->StatusRezerwacji;
+
 				array<String^>^ row = {
+					r->Id.ToString(),
 					r->Imie + " " + r->Nazwisko,
 					r->Pokoj.ToString(),
 					r->DataOd.ToString("dd.MM.yyyy"),
-					r->DataDo.ToString("dd.MM.yyyy")
+					r->DataDo.ToString("dd.MM.yyyy"),
+					ladnyStatus,
+					r->IloscGosci.ToString()
 				};
 				this->dgvLista->Rows->Add(row);
 			}
@@ -92,6 +104,7 @@ namespace AplikacjaHotelowa {
 		void InitializeComponent(void)
 		{
 			this->dgvLista = (gcnew System::Windows::Forms::DataGridView());
+			this->dgvLista->CellDoubleClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &ZameldowaniaListaForm::dgvLista_CellDoubleClick);
 			this->dataGridView2 = (gcnew System::Windows::Forms::DataGridView());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgvLista))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView2))->BeginInit();
@@ -127,9 +140,19 @@ namespace AplikacjaHotelowa {
 
 		}
 #pragma endregion
-	private: System::Void dataGridView2_CellContentClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
-	}
-	private: System::Void dataGridView2_CellContentClick_1(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
+	private: System::Void dgvLista_CellDoubleClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
+		if (e->RowIndex >= 0) { // Sprawdzamy czy klikniêto wiersz, a nie nag³ówek tabeli
+			// Wyci¹gamy Id z ukrytej komórki wybranego wiersza
+			int wybraneId = Convert::ToInt32(dgvLista->Rows[e->RowIndex]->Cells[L"Id"]->Value);
+
+			// Otwieramy okno szczegó³ów przekazuj¹c mu to Id (kod okna stworzymy w Kroku 2)
+			SzczegolyRezerwacjiForm^ szczegolyForm = gcnew SzczegolyRezerwacjiForm(wybraneId);
+
+			// Jeœli w oknie szczegó³ów coœ zmieniono i zamkniêto je poprawnie (OK), odœwie¿amy tabelê
+			if (szczegolyForm->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
+				OdswiezDane();
+			}
+		}
 	}
 	};
 }

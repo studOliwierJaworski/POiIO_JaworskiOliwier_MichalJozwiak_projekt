@@ -20,6 +20,7 @@ namespace AplikacjaHotelowa {
             SQLiteConnection^ conn = gcnew SQLiteConnection(connectionString);
             try {
                 conn->Open();
+                // Tworzymy podstawową tabelę
                 String^ sql = "CREATE TABLE IF NOT EXISTS Rezerwacje ("
                     "Id INTEGER PRIMARY KEY AUTOINCREMENT, "
                     "Imie TEXT, "
@@ -28,9 +29,28 @@ namespace AplikacjaHotelowa {
                     "DataOd TEXT, "
                     "DataDo TEXT, "
                     "StanCzystosci TEXT);";
-
                 SQLiteCommand^ cmd = gcnew SQLiteCommand(sql, conn);
                 cmd->ExecuteNonQuery();
+
+                // aktualizujemy
+                array<String^>^ noweKolumny = {
+                    "ALTER TABLE Rezerwacje ADD COLUMN TypDokumentu TEXT;",
+                    "ALTER TABLE Rezerwacje ADD COLUMN NrDokumentu TEXT;",
+                    "ALTER TABLE Rezerwacje ADD COLUMN MetodaPlatnosci TEXT;",
+                    "ALTER TABLE Rezerwacje ADD COLUMN Kwota REAL;",
+                    "ALTER TABLE Rezerwacje ADD COLUMN StatusRezerwacji TEXT;"
+                    "ALTER TABLE Rezerwacje ADD COLUMN IloscGosci INTEGER;"
+                };
+
+                for each (String ^ alterSql in noweKolumny) {
+                    try {
+                        SQLiteCommand^ cmdAlter = gcnew SQLiteCommand(alterSql, conn);
+                        cmdAlter->ExecuteNonQuery();
+                    }
+                    catch (...) {
+                        // Ignorujemy błędy, jeśli kolumny już istnieją w bazie
+                    }
+                }
             }
             finally {
                 conn->Close();
@@ -43,18 +63,20 @@ namespace AplikacjaHotelowa {
 
             try {
                 conn->Open();
-                String^ sql = "INSERT INTO Rezerwacje (Imie, Nazwisko, Pokoj, DataOd, DataDo, StanCzystosci) "
-                    "VALUES (@imie, @nazwisko, @pokoj, @od, @do, @status)";
+                String^ sql = "INSERT INTO Rezerwacje (Imie, Nazwisko, Pokoj, DataOd, DataDo, StanCzystosci, StatusRezerwacji, Kwota, IloscGosci)"
+                    "VALUES (@imie, @nazwisko, @pokoj, @od, @do, @statusC, @statusR, @kwota, @ilosc)";
 
                 SQLiteCommand^ cmd = gcnew SQLiteCommand(sql, conn);
 
                 cmd->Parameters->AddWithValue("@imie", r->Imie);
                 cmd->Parameters->AddWithValue("@nazwisko", r->Nazwisko);
                 cmd->Parameters->AddWithValue("@pokoj", r->Pokoj);
-
                 cmd->Parameters->AddWithValue("@od", r->DataOd.ToString("yyyy-MM-dd"));
                 cmd->Parameters->AddWithValue("@do", r->DataDo.ToString("yyyy-MM-dd"));
-                cmd->Parameters->AddWithValue("@status", r->StanCzystosci);
+                cmd->Parameters->AddWithValue("@statusC", r->StanCzystosci);
+                cmd->Parameters->AddWithValue("@statusR", "Oczekujaca"); // Domyślny status
+                cmd->Parameters->AddWithValue("@kwota", 0.0);
+                cmd->Parameters->AddWithValue("@ilosc", 1);
                 cmd->ExecuteNonQuery();
             }
             finally {
@@ -113,20 +135,37 @@ namespace AplikacjaHotelowa {
 
             try {
                 conn->Open();
-                String^ sql = "SELECT Imie, Nazwisko, Pokoj, DataOd, DataDo, StanCzystosci FROM Rezerwacje";
+                String^ sql = "SELECT * FROM Rezerwacje";
                 SQLiteCommand^ cmd = gcnew SQLiteCommand(sql, conn);
                 SQLiteDataReader^ reader = cmd->ExecuteReader();
 
                 while (reader->Read()) {
                     Rezerwacja^ r = gcnew Rezerwacja();
+                    r->Id = Convert::ToInt32(reader["Id"]);
                     r->Imie = reader["Imie"]->ToString();
                     r->Nazwisko = reader["Nazwisko"]->ToString();
                     r->Pokoj = Convert::ToInt32(reader["Pokoj"]);
                     r->DataOd = DateTime::Parse(reader["DataOd"]->ToString());
                     r->DataDo = DateTime::Parse(reader["DataDo"]->ToString());
                     r->StanCzystosci = reader["StanCzystosci"]->ToString();
+
+                    
+                    r->StatusRezerwacji = reader["StatusRezerwacji"]->ToString();
+                    r->TypDokumentu = reader["TypDokumentu"]->ToString();
+                    r->NrDokumentu = reader["NrDokumentu"]->ToString();
+                    r->MetodaPlatnosci = reader["MetodaPlatnosci"]->ToString();
+                    r->Kwota = Convert::ToDouble(reader["Kwota"]);
+                    if (reader["IloscGosci"]->ToString() != "") // jak puste to przypisujemy 1
+                    {
+                        r->IloscGosci = Convert::ToInt32(reader["IloscGosci"]);
+                    }
+                    else
+                    {
+                        r->IloscGosci = 1;
+                    }
                     lista->Add(r);
                 }
+                reader->Close();
             }
             finally {
                 conn->Close();
@@ -140,8 +179,8 @@ namespace AplikacjaHotelowa {
 
             try {
                 conn->Open();
-                // Pobieramy rezerwacje, które kończą się (wymeldowanie) wybranego dnia
-                String^ sql = "SELECT Imie, Nazwisko, Pokoj, DataOd, DataDo, StanCzystosci FROM Rezerwacje WHERE DataDo = @data";
+                // Pobieramy rezerwacje które kończą się wybranego dnia
+                String^ sql = "SELECT * FROM Rezerwacje WHERE DataDo = @data";
                 SQLiteCommand^ cmd = gcnew SQLiteCommand(sql, conn);
 
                 cmd->Parameters->AddWithValue("@data", data.ToString("yyyy-MM-dd"));
@@ -149,14 +188,31 @@ namespace AplikacjaHotelowa {
 
                 while (reader->Read()) {
                     Rezerwacja^ r = gcnew Rezerwacja();
+                    r->Id = Convert::ToInt32(reader["Id"]);
                     r->Imie = reader["Imie"]->ToString();
                     r->Nazwisko = reader["Nazwisko"]->ToString();
                     r->Pokoj = Convert::ToInt32(reader["Pokoj"]);
                     r->DataOd = DateTime::Parse(reader["DataOd"]->ToString());
                     r->DataDo = DateTime::Parse(reader["DataDo"]->ToString());
                     r->StanCzystosci = reader["StanCzystosci"]->ToString();
+
+                    r->StatusRezerwacji = reader["StatusRezerwacji"]->ToString();
+                    r->TypDokumentu = reader["TypDokumentu"]->ToString();
+                    r->NrDokumentu = reader["NrDokumentu"]->ToString();
+                    r->MetodaPlatnosci = reader["MetodaPlatnosci"]->ToString();
+                    r->Kwota = Convert::ToDouble(reader["Kwota"]);
+                    if (reader["IloscGosci"]->ToString() != "") // jak puste to przypisujemy 1
+                    {
+                        r->IloscGosci = Convert::ToInt32(reader["IloscGosci"]);
+                    }
+                    else
+                    {
+                        r->IloscGosci = 1;
+                    }
+
                     lista->Add(r);
                 }
+                reader->Close();
             }
             finally {
                 conn->Close();
@@ -164,5 +220,71 @@ namespace AplikacjaHotelowa {
             return lista;
         }
     
+        static void Aktualizuj(Rezerwacja^ r) {
+            SQLiteConnection^ conn = gcnew SQLiteConnection(connectionString);
+            try {
+                conn->Open();
+                String^ sql = "UPDATE Rezerwacje SET "
+                    "TypDokumentu = @typ, NrDokumentu = @nr, "
+                    "MetodaPlatnosci = @platnosc, Kwota = @kwota, "
+                    "StatusRezerwacji = @status, IloscGosci = @ilosc "
+                    "WHERE Id = @id";
+
+                SQLiteCommand^ cmd = gcnew SQLiteCommand(sql, conn);
+                cmd->Parameters->AddWithValue("@typ", r->TypDokumentu != nullptr ? r->TypDokumentu : "");
+                cmd->Parameters->AddWithValue("@nr", r->NrDokumentu != nullptr ? r->NrDokumentu : "");
+                cmd->Parameters->AddWithValue("@platnosc", r->MetodaPlatnosci != nullptr ? r->MetodaPlatnosci : "");
+                cmd->Parameters->AddWithValue("@kwota", r->Kwota);
+                cmd->Parameters->AddWithValue("@status", r->StatusRezerwacji);
+                cmd->Parameters->AddWithValue("@id", r->Id);
+                cmd->Parameters->AddWithValue("@ilosc", r->IloscGosci);
+
+                cmd->ExecuteNonQuery();
+            }
+            finally {
+                conn->Close();
+            }
+        }
+
+        static Rezerwacja^ PobierzPoId(int id) {
+            Rezerwacja^ r = nullptr;
+            SQLiteConnection^ conn = gcnew SQLiteConnection(connectionString);
+
+            try {
+                conn->Open();
+                String^ sql = "SELECT * FROM Rezerwacje WHERE Id = @id";
+                SQLiteCommand^ cmd = gcnew SQLiteCommand(sql, conn);
+                cmd->Parameters->AddWithValue("@id", id);
+                SQLiteDataReader^ reader = cmd->ExecuteReader();
+
+                if (reader->Read()) {
+                    r = gcnew Rezerwacja();
+                    r->Id = Convert::ToInt32(reader["Id"]);
+                    r->Imie = reader["Imie"]->ToString();
+                    r->Nazwisko = reader["Nazwisko"]->ToString();
+                    r->Pokoj = Convert::ToInt32(reader["Pokoj"]);
+                    r->DataOd = DateTime::Parse(reader["DataOd"]->ToString());
+                    r->DataDo = DateTime::Parse(reader["DataDo"]->ToString());
+                    r->StatusRezerwacji = reader["StatusRezerwacji"]->ToString();
+                    r->TypDokumentu = reader["TypDokumentu"]->ToString();
+                    r->NrDokumentu = reader["NrDokumentu"]->ToString();
+                    r->MetodaPlatnosci = reader["MetodaPlatnosci"]->ToString();
+                    r->Kwota = Convert::ToDouble(reader["Kwota"]);
+                    if (reader["IloscGosci"]->ToString() != "") // jak puste to 1
+                    {
+                        r->IloscGosci = Convert::ToInt32(reader["IloscGosci"]);
+                    }
+                    else
+                    {
+                        r->IloscGosci = 1;
+                    }
+                }
+                reader->Close();
+            }
+            finally {
+                conn->Close();
+            }
+            return r; // Zwracamy jednego konkretnego gościa
+        }
     };
 }
