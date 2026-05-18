@@ -266,7 +266,8 @@ namespace AplikacjaHotelowa {
 
 			if (rezerwacja != nullptr) {
 				lblGosc->Text = L"Goœæ: " + rezerwacja->Imie + L" " + rezerwacja->Nazwisko;
-				lblPokoj->Text = L"Pokój: " + rezerwacja->Pokoj.ToString();
+				String^ typPokoju = RezerwacjaService::PobierzTypDlaNumeruPokoju(rezerwacja->Pokoj);
+				lblPokoj->Text = L"Pokój: " + rezerwacja->Pokoj.ToString() + " (" + typPokoju + ")";
 
 				if (rezerwacja->StatusRezerwacji == L"Oczekujaca") {
 					lblStatus->Text = L"Status: Oczekuj¹ca";

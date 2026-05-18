@@ -83,10 +83,13 @@ namespace AplikacjaHotelowa {
 				// problem z wyœwietleniem ¹ w statusie - naprawiony
 				String^ ladnyStatus = (r->StatusRezerwacji == "Oczekujaca") ? L"Oczekuj¹ca" : r->StatusRezerwacji;
 
+				String^ typPokoju = RezerwacjaService::PobierzTypDlaNumeruPokoju(r->Pokoj);
+				String^ wyswietlanyPokoj = r->Pokoj.ToString() + " (" + typPokoju + ")";
+
 				array<String^>^ row = {
 					r->Id.ToString(),
 					r->Imie + " " + r->Nazwisko,
-					r->Pokoj.ToString(),
+					wyswietlanyPokoj,
 					r->DataOd.ToString("dd.MM.yyyy"),
 					r->DataDo.ToString("dd.MM.yyyy"),
 					ladnyStatus,

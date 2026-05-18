@@ -44,7 +44,7 @@ namespace AplikacjaHotelowa {
 	private: System::Windows::Forms::TextBox^ txtNazwisko;
 
 	private: System::Windows::Forms::TextBox^ txtImie;
-	private: System::Windows::Forms::NumericUpDown^ numPokoj;
+	private: System::Windows::Forms::ComboBox^ cmbTypPokoju;
 
 
 	private: System::Windows::Forms::Label^ label5;
@@ -79,7 +79,7 @@ namespace AplikacjaHotelowa {
 			this->btnZapisz = (gcnew System::Windows::Forms::Button());
 			this->dtpDo = (gcnew System::Windows::Forms::DateTimePicker());
 			this->dtpOd = (gcnew System::Windows::Forms::DateTimePicker());
-			this->numPokoj = (gcnew System::Windows::Forms::NumericUpDown());
+			this->cmbTypPokoju = (gcnew System::Windows::Forms::ComboBox());
 			this->label5 = (gcnew System::Windows::Forms::Label());
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->label2 = (gcnew System::Windows::Forms::Label());
@@ -88,7 +88,6 @@ namespace AplikacjaHotelowa {
 			this->Nazwisko = (gcnew System::Windows::Forms::Label());
 			this->Imiê = (gcnew System::Windows::Forms::Label());
 			this->panel1->SuspendLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numPokoj))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// panel1
@@ -100,7 +99,7 @@ namespace AplikacjaHotelowa {
 			this->panel1->Controls->Add(this->btnZapisz);
 			this->panel1->Controls->Add(this->dtpDo);
 			this->panel1->Controls->Add(this->dtpOd);
-			this->panel1->Controls->Add(this->numPokoj);
+			this->panel1->Controls->Add(this->cmbTypPokoju);
 			this->panel1->Controls->Add(this->label5);
 			this->panel1->Controls->Add(this->label4);
 			this->panel1->Controls->Add(this->label2);
@@ -168,16 +167,13 @@ namespace AplikacjaHotelowa {
 			this->dtpOd->TabIndex = 9;
 			this->dtpOd->ValueChanged += gcnew System::EventHandler(this, &TworzenieRezerwacjiForm::dtpOd_ValueChanged);
 			// 
-			// numPokoj
+			// cmbTypPokoju
 			// 
-			this->numPokoj->Location = System::Drawing::Point(75, 102);
-			this->numPokoj->Margin = System::Windows::Forms::Padding(2);
-			this->numPokoj->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 500, 0, 0, 0 });
-			this->numPokoj->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 0 });
-			this->numPokoj->Name = L"numPokoj";
-			this->numPokoj->Size = System::Drawing::Size(100, 20);
-			this->numPokoj->TabIndex = 8;
-			this->numPokoj->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 0 });
+			this->cmbTypPokoju->Location = System::Drawing::Point(75, 102);
+			this->cmbTypPokoju->Name = L"cmbTypPokoju";
+			this->cmbTypPokoju->Size = System::Drawing::Size(102, 21);
+			this->cmbTypPokoju->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
+			this->cmbTypPokoju->Items->AddRange(gcnew cli::array< System::Object^  >(5) { L"DBLQ", L"DBLT", L"SGL", L"3PPL", L"4PPL" });
 			// 
 			// label5
 			// 
@@ -207,7 +203,7 @@ namespace AplikacjaHotelowa {
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(34, 13);
 			this->label2->TabIndex = 5;
-			this->label2->Text = L"Pokój";
+			this->label2->Text = L"Typ pokoju";
 			// 
 			// txtNazwisko
 			// 
@@ -261,14 +257,13 @@ namespace AplikacjaHotelowa {
 			this->Load += gcnew System::EventHandler(this, &TworzenieRezerwacjiForm::TworzenieRezerwacjiForm_Load);
 			this->panel1->ResumeLayout(false);
 			this->panel1->PerformLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numPokoj))->EndInit();
 			this->ResumeLayout(false);
 
 		}
 #pragma endregion
 		// ZAPISZ-PRZYCISK
 private: System::Void btnZapisz_Click(System::Object^ sender, System::EventArgs^ e) {
-	if (txtImie->Text == "" || txtNazwisko->Text == "")
+	if (txtImie->Text == "" || txtNazwisko->Text == "" || cmbTypPokoju->Text == "")
 	{
 		MessageBox::Show("Uzupe³nij dane!");
 		return;
@@ -284,30 +279,29 @@ private: System::Void btnZapisz_Click(System::Object^ sender, System::EventArgs^
 	Rezerwacja^ r = gcnew Rezerwacja();
 	r->Imie = txtImie->Text;
 	r->Nazwisko = txtNazwisko->Text;
-	r->Pokoj = (int)numPokoj->Value;
 	r->DataOd = dtpOd->Value;
 	r->DataDo = dtpDo->Value;
 	r->StanCzystosci = "Czysty";
-	//walidacja konfliktu rezerwacji.
-	bool dostepny =
-		RezerwacjaService::CzyPokojDostepny(
-			r->Pokoj,
-			r->DataOd,
-			r->DataDo);
 
-	if (!dostepny)
+	// wywo³ujemy przydzielenie pokoju po typie
+	int przydzielonyPokoj = RezerwacjaService::ZnajdzWolnyPokojZTypu(cmbTypPokoju->Text, r->DataOd, r->DataDo);
+
+	if (przydzielonyPokoj == -1)
 	{
 		MessageBox::Show(
-			L"Pokój jest ju¿ zarezerwowany w tym terminie.",
-			L"B³¹d rezerwacji",
+			L"Niestety, brak wolnych pokoi typu " + cmbTypPokoju->Text + L" w podanym terminie!",
+			L"Brak dostêpnoœci",
 			MessageBoxButtons::OK,
 			MessageBoxIcon::Warning);
-
 		return;
 	}
+
+	// przypisujemy wylosowany i wolny numer pokoju do rezerwacji
+	r->Pokoj = przydzielonyPokoj;
+
 	RezerwacjaService::Dodaj(r);
 
-	MessageBox::Show("Utworzono!");
+	MessageBox::Show("Utworzono rezerwacjê! System przydzieli³ pokój numer: " + przydzielonyPokoj.ToString(), L"Sukces", MessageBoxButtons::OK, MessageBoxIcon::Information);
 
 	WyczyscFormularz();
 
@@ -320,7 +314,7 @@ private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e
 	   {
 		   txtImie->Text = "";
 		   txtNazwisko->Text = "";
-		   numPokoj->Value = 1;
+		   cmbTypPokoju->SelectedIndex = -1;
 		   dtpOd->Value = DateTime::Now;
 		   dtpDo->MinDate = dtpOd->Value.Date; // Aktualizujemy limit
 		   dtpDo->Value = DateTime::Now;

@@ -286,5 +286,72 @@ namespace AplikacjaHotelowa {
             }
             return r; // Zwracamy jednego konkretnego gościa
         }
+
+        static List<int>^ PobierzWszystkiePokojeDlaTypu(String^ typ) {
+            List<int>^ pokoje = gcnew List<int>();
+
+            if (typ == "DBLQ") { // 8 pokoi
+                pokoje->AddRange(gcnew array<int>{ 101, 102, 103, 201, 202, 203, 301, 302 });
+            }
+            else if (typ == "DBLT") { // 5 pokoi
+                pokoje->AddRange(gcnew array<int>{ 104, 105, 204, 205, 303 });
+            }
+            else if (typ == "SGL") { // 5 pokoi
+                pokoje->AddRange(gcnew array<int>{ 106, 107, 206, 207, 304 });
+            }
+            else if (typ == "3PPL") { // 1 pokój
+                pokoje->Add(305);
+            }
+            else if (typ == "4PPL") { // 1 pokój
+                pokoje->Add(306);
+            }
+            return pokoje;
+        }
+
+        // rozpoznanie typu pokoju, aby móc wpisać to do tabelki i nie trzymać wszystkiego w bazie danych (łatwiej)
+        static String^ PobierzTypDlaNumeruPokoju(int nrPokoju) {
+            if (nrPokoju == 101 || nrPokoju == 102 || nrPokoju == 103 || nrPokoju == 201 ||
+                nrPokoju == 202 || nrPokoju == 203 || nrPokoju == 301 || nrPokoju == 302) {
+                return "DBLQ";
+            }
+            if (nrPokoju == 104 || nrPokoju == 105 || nrPokoju == 204 || nrPokoju == 205 || nrPokoju == 303) {
+                return "DBLT";
+            }
+            if (nrPokoju == 106 || nrPokoju == 107 || nrPokoju == 206 || nrPokoju == 207 || nrPokoju == 304) {
+                return "SGL";
+            }
+            if (nrPokoju == 305) {
+                return "3PPL";
+            }
+            if (nrPokoju == 306) {
+                return "4PPL";
+            }
+            return "Nieznany";
+        }
+
+        // losowanie wolnego pokoju danego typu
+        static int ZnajdzWolnyPokojZTypu(String^ typ, DateTime dataOd, DateTime dataDo) {
+            List<int>^ wszystkiePokojeZTypu = PobierzWszystkiePokojeDlaTypu(typ);
+            List<int>^ dostepnePokoje = gcnew List<int>();
+
+            // Sprawdzamy pokój po pokoju, czy jest wolny w tym terminie
+            for each (int nrPokoju in wszystkiePokojeZTypu) {
+                if (CzyPokojDostepny(nrPokoju, dataOd, dataDo)) {
+                    dostepnePokoje->Add(nrPokoju); // Jeśli wolny, dodajemy do listy kandydatów
+                }
+            }
+
+            // Jeśli nie ma ani jednego wolnego pokoju tego typu
+            if (dostepnePokoje->Count == 0) {
+                return -1;
+            }
+
+            // Losowanie jednego pokoju z listy dostępnych
+            Random^ rand = gcnew Random();
+            int randomIndex = rand->Next(dostepnePokoje->Count);
+            return dostepnePokoje[randomIndex];
+        }
+
+
     };
 }

@@ -6,6 +6,9 @@
 #include "PobudkaService.h"
 #include "PanelPokojuForm.h"
 #include "StanCzystosciForm.h"
+#include "ListaPokoiForm.h"
+
+
 namespace AplikacjaHotelowa {
 
 	using namespace System;
@@ -111,7 +114,8 @@ namespace AplikacjaHotelowa {
 		System::Windows::Forms::MenuStrip^ menuStrip1;
 		System::Windows::Forms::ToolStripMenuItem^ menuU¿ytkownikaToolStripMenuItem;
 		System::Windows::Forms::ToolStripMenuItem^ pobytToolStripMenuItem;
-		System::Windows::Forms::ToolStripMenuItem^ panelPokojuToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^ listaPokoiToolStripMenuItem;
+		   System::Windows::Forms::ToolStripMenuItem^ panelPokojuToolStripMenuItem;
 
 
 #pragma region Windows Form Designer generated code
@@ -140,12 +144,15 @@ namespace AplikacjaHotelowa {
 			this->menuU¿ytkownikaToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->pobytToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->panelPokojuToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->listaPokoiToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
+			this->panelDashboard->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgvWiadomosci))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgvBudzenia))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox3))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox4))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgvWiadomosci))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgvBudzenia))->BeginInit();
+			this->menuStrip1->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// btnZameldowania
@@ -191,7 +198,6 @@ namespace AplikacjaHotelowa {
 			this->btnWymeldowania->Text = L"Wymeldowania";
 			this->btnWymeldowania->UseVisualStyleBackColor = false;
 			this->btnWymeldowania->Click += gcnew System::EventHandler(this, &Home::btnWymeldowania_Click);
-
 			// 
 			// btnCzystosc
 			// 
@@ -227,6 +233,72 @@ namespace AplikacjaHotelowa {
 			this->btnRezerwacje->UseVisualStyleBackColor = false;
 			this->btnRezerwacje->Click += gcnew System::EventHandler(this, &Home::btnRezerwacje_Click);
 			// 
+			// panelDashboard
+			// 
+			this->panelDashboard->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(52)), static_cast<System::Int32>(static_cast<System::Byte>(73)),
+				static_cast<System::Int32>(static_cast<System::Byte>(94)));
+			this->panelDashboard->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
+			this->panelDashboard->Controls->Add(this->lblDashboardTytul);
+			this->panelDashboard->Location = System::Drawing::Point(750, 12);
+			this->panelDashboard->Name = L"panelDashboard";
+			this->panelDashboard->Size = System::Drawing::Size(400, 300);
+			this->panelDashboard->TabIndex = 8;
+			// 
+			// lblDashboardTytul
+			// 
+			this->lblDashboardTytul->Font = (gcnew System::Drawing::Font(L"Segoe UI", 16, System::Drawing::FontStyle::Bold));
+			this->lblDashboardTytul->ForeColor = System::Drawing::Color::White;
+			this->lblDashboardTytul->Location = System::Drawing::Point(0, 8);
+			this->lblDashboardTytul->Name = L"lblDashboardTytul";
+			this->lblDashboardTytul->Size = System::Drawing::Size(400, 36);
+			this->lblDashboardTytul->TabIndex = 0;
+			this->lblDashboardTytul->Text = L"Panel informacyjny";
+			this->lblDashboardTytul->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
+			// 
+			// lblWiadomosciTytul
+			// 
+			this->lblWiadomosciTytul->Font = (gcnew System::Drawing::Font(L"Segoe UI", 14, System::Drawing::FontStyle::Bold));
+			this->lblWiadomosciTytul->Location = System::Drawing::Point(750, 322);
+			this->lblWiadomosciTytul->Name = L"lblWiadomosciTytul";
+			this->lblWiadomosciTytul->Size = System::Drawing::Size(750, 22);
+			this->lblWiadomosciTytul->TabIndex = 9;
+			this->lblWiadomosciTytul->Text = L"Wiadomoœci hotelu";
+			// 
+			// dgvWiadomosci
+			// 
+			this->dgvWiadomosci->AllowUserToAddRows = false;
+			this->dgvWiadomosci->AllowUserToDeleteRows = false;
+			this->dgvWiadomosci->BackgroundColor = System::Drawing::Color::White;
+			this->dgvWiadomosci->Location = System::Drawing::Point(750, 348);
+			this->dgvWiadomosci->Name = L"dgvWiadomosci";
+			this->dgvWiadomosci->ReadOnly = true;
+			this->dgvWiadomosci->RowHeadersVisible = false;
+			this->dgvWiadomosci->SelectionMode = System::Windows::Forms::DataGridViewSelectionMode::FullRowSelect;
+			this->dgvWiadomosci->Size = System::Drawing::Size(400, 180);
+			this->dgvWiadomosci->TabIndex = 10;
+			// 
+			// lblBudzeniaTytul
+			// 
+			this->lblBudzeniaTytul->Font = (gcnew System::Drawing::Font(L"Segoe UI", 14, System::Drawing::FontStyle::Bold));
+			this->lblBudzeniaTytul->Location = System::Drawing::Point(750, 538);
+			this->lblBudzeniaTytul->Name = L"lblBudzeniaTytul";
+			this->lblBudzeniaTytul->Size = System::Drawing::Size(400, 22);
+			this->lblBudzeniaTytul->TabIndex = 11;
+			this->lblBudzeniaTytul->Text = L"Lista budzeñ";
+			// 
+			// dgvBudzenia
+			// 
+			this->dgvBudzenia->AllowUserToAddRows = false;
+			this->dgvBudzenia->AllowUserToDeleteRows = false;
+			this->dgvBudzenia->BackgroundColor = System::Drawing::Color::White;
+			this->dgvBudzenia->Location = System::Drawing::Point(750, 564);
+			this->dgvBudzenia->Name = L"dgvBudzenia";
+			this->dgvBudzenia->ReadOnly = true;
+			this->dgvBudzenia->RowHeadersVisible = false;
+			this->dgvBudzenia->SelectionMode = System::Windows::Forms::DataGridViewSelectionMode::FullRowSelect;
+			this->dgvBudzenia->Size = System::Drawing::Size(400, 159);
+			this->dgvBudzenia->TabIndex = 12;
+			// 
 			// pictureBox2
 			// 
 			this->pictureBox2->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox2.Image")));
@@ -256,118 +328,45 @@ namespace AplikacjaHotelowa {
 			this->pictureBox4->SizeMode = System::Windows::Forms::PictureBoxSizeMode::Zoom;
 			this->pictureBox4->TabIndex = 7;
 			this->pictureBox4->TabStop = false;
-
-			//
-			// panelDashboard
-			//
-			this->panelDashboard->Location = System::Drawing::Point(750, 12);
-			this->panelDashboard->Name = L"panelDashboard";
-			this->panelDashboard->Size = System::Drawing::Size(400, 300);
-			this->panelDashboard->BackColor = System::Drawing::Color::FromArgb(52, 73, 94);
-			this->panelDashboard->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-			//
-			// lblDashboardTytul
-			//
-			this->lblDashboardTytul->Location = System::Drawing::Point(0, 8);
-			this->lblDashboardTytul->Size = System::Drawing::Size(400 - 2, 36);
-			this->lblDashboardTytul->Font = (gcnew System::Drawing::Font(L"Segoe UI", 16, System::Drawing::FontStyle::Bold));
-			this->lblDashboardTytul->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
-			this->lblDashboardTytul->ForeColor = System::Drawing::Color::White;
-			this->lblDashboardTytul->Text = L"Panel informacyjny";
-			this->panelDashboard->Controls->Add(this->lblDashboardTytul);
-
-
-
-
-
-
-			//
-			// lblWiadomosciTytul
-			//
-			this->lblWiadomosciTytul->Location = System::Drawing::Point(750, 322);
-			this->lblWiadomosciTytul->Size = System::Drawing::Size(750, 22);
-			this->lblWiadomosciTytul->Font = (gcnew System::Drawing::Font(L"Segoe UI", 14, System::Drawing::FontStyle::Bold));
-			this->lblWiadomosciTytul->Text = L"Wiadomoœci hotelu";
-
-			//
-			// dgvWiadomosci
-			//
-			this->dgvWiadomosci->Location = System::Drawing::Point(750, 348);
-			this->dgvWiadomosci->Size = System::Drawing::Size(400, 180);
-			this->dgvWiadomosci->Name = L"dgvWiadomosci";
-			this->dgvWiadomosci->AllowUserToAddRows = false;
-			this->dgvWiadomosci->AllowUserToDeleteRows = false;
-			this->dgvWiadomosci->ReadOnly = true;
-			this->dgvWiadomosci->RowHeadersVisible = false;
-			this->dgvWiadomosci->SelectionMode = System::Windows::Forms::DataGridViewSelectionMode::FullRowSelect;
-			this->dgvWiadomosci->BackgroundColor = System::Drawing::Color::White;
-
-
-			//
-			// lblBudzeniaTytul
-			//
-			this->lblBudzeniaTytul->Location = System::Drawing::Point(750, 538);
-			this->lblBudzeniaTytul->Size = System::Drawing::Size(400, 22);
-			this->lblBudzeniaTytul->Font = (gcnew System::Drawing::Font(L"Segoe UI", 14, System::Drawing::FontStyle::Bold));
-			this->lblBudzeniaTytul->Text = L"Lista budzeñ";
-
-			//
-			// dgvBudzenia
-			//
-			this->dgvBudzenia->Location = System::Drawing::Point(750, 564);
-			this->dgvBudzenia->Size = System::Drawing::Size(400, 159);
-			this->dgvBudzenia->Name = L"dgvBudzenia";
-			this->dgvBudzenia->AllowUserToAddRows = false;
-			this->dgvBudzenia->AllowUserToDeleteRows = false;
-			this->dgvBudzenia->ReadOnly = true;
-			this->dgvBudzenia->RowHeadersVisible = false;
-			this->dgvBudzenia->SelectionMode = System::Windows::Forms::DataGridViewSelectionMode::FullRowSelect;
-			this->dgvBudzenia->BackgroundColor = System::Drawing::Color::White;
-			//
-// menuStrip1
-//
-			this->menuStrip1->Items->AddRange(
-				gcnew cli::array< System::Windows::Forms::ToolStripItem^ >(1)
-			{
-				this->menuU¿ytkownikaToolStripMenuItem
-			});
-
+			// 
+			// menuStrip1
+			// 
+			this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->menuU¿ytkownikaToolStripMenuItem });
 			this->menuStrip1->Location = System::Drawing::Point(0, 0);
 			this->menuStrip1->Name = L"menuStrip1";
 			this->menuStrip1->Size = System::Drawing::Size(1193, 24);
-
-			//
+			this->menuStrip1->TabIndex = 13;
+			// 
 			// menuU¿ytkownikaToolStripMenuItem
-			//
-			this->menuU¿ytkownikaToolStripMenuItem->DropDownItems->AddRange(
-				gcnew cli::array< System::Windows::Forms::ToolStripItem^ >(1)
-			{
-				this->pobytToolStripMenuItem
+			// 
+			this->menuU¿ytkownikaToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
+				this->pobytToolStripMenuItem,
+					this->listaPokoiToolStripMenuItem
 			});
-
+			this->menuU¿ytkownikaToolStripMenuItem->Name = L"menuU¿ytkownikaToolStripMenuItem";
+			this->menuU¿ytkownikaToolStripMenuItem->Size = System::Drawing::Size(119, 20);
 			this->menuU¿ytkownikaToolStripMenuItem->Text = L"Menu u¿ytkownika";
-
-			//
+			// 
 			// pobytToolStripMenuItem
-			//
-			this->pobytToolStripMenuItem->DropDownItems->AddRange(
-				gcnew cli::array< System::Windows::Forms::ToolStripItem^ >(1)
-			{
-				this->panelPokojuToolStripMenuItem
-			});
-
+			// 
+			this->pobytToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->panelPokojuToolStripMenuItem });
+			this->pobytToolStripMenuItem->Name = L"pobytToolStripMenuItem";
+			this->pobytToolStripMenuItem->Size = System::Drawing::Size(180, 22);
 			this->pobytToolStripMenuItem->Text = L"Pobyt";
-
-			//
+			// 
 			// panelPokojuToolStripMenuItem
-			//
+			// 
+			this->panelPokojuToolStripMenuItem->Name = L"panelPokojuToolStripMenuItem";
+			this->panelPokojuToolStripMenuItem->Size = System::Drawing::Size(143, 22);
 			this->panelPokojuToolStripMenuItem->Text = L"Panel pokoju";
-
-			this->panelPokojuToolStripMenuItem->Click +=
-				gcnew System::EventHandler(
-					this,
-					&Home::panelPokojuToolStripMenuItem_Click
-				);
+			this->panelPokojuToolStripMenuItem->Click += gcnew System::EventHandler(this, &Home::panelPokojuToolStripMenuItem_Click);
+			// 
+			// listaPokoiToolStripMenuItem
+			// 
+			this->listaPokoiToolStripMenuItem->Name = L"listaPokoiToolStripMenuItem";
+			this->listaPokoiToolStripMenuItem->Size = System::Drawing::Size(180, 22);
+			this->listaPokoiToolStripMenuItem->Text = L"Lista pokoi";
+			this->listaPokoiToolStripMenuItem->Click += gcnew System::EventHandler(this, &Home::listaPokoiToolStripMenuItem_Click);
 			// 
 			// Home
 			// 
@@ -388,16 +387,20 @@ namespace AplikacjaHotelowa {
 			this->Controls->Add(this->lblBudzeniaTytul);
 			this->Controls->Add(this->dgvBudzenia);
 			this->Controls->Add(this->menuStrip1);
+			this->MainMenuStrip = this->menuStrip1;
 			this->Name = L"Home";
 			this->Text = L"Strona g³ówna";
-			this->MainMenuStrip = this->menuStrip1;
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
+			this->panelDashboard->ResumeLayout(false);
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgvWiadomosci))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgvBudzenia))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox3))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox4))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgvWiadomosci))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgvBudzenia))->EndInit();
+			this->menuStrip1->ResumeLayout(false);
+			this->menuStrip1->PerformLayout();
 			this->ResumeLayout(false);
+			this->PerformLayout();
 
 		}
 #pragma endregion
@@ -441,5 +444,10 @@ namespace AplikacjaHotelowa {
 		
 	}
 
-	};
+	private: System::Void listaPokoiToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
+
+		ListaPokoiForm^ form = gcnew ListaPokoiForm();
+		form->ShowDialog();
+	}
+};
 }

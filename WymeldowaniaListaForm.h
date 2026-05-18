@@ -79,10 +79,13 @@ namespace AplikacjaHotelowa {
 			for each (Rezerwacja ^ r in rezerwacje) {
 				String^ ladnyStatus = (r->StatusRezerwacji == "Oczekujaca") ? L"Oczekuj¹ca" : r->StatusRezerwacji;
 
+				String^ typPokoju = RezerwacjaService::PobierzTypDlaNumeruPokoju(r->Pokoj);
+				String^ wyswietlanyPokoj = r->Pokoj.ToString() + " (" + typPokoju + ")";
+
 				array<String^>^ row = {
 					r->Id.ToString(),
 					r->Imie + " " + r->Nazwisko,
-					r->Pokoj.ToString(),
+					wyswietlanyPokoj,
 					ladnyStatus,
 					r->IloscGosci.ToString()
 				};
