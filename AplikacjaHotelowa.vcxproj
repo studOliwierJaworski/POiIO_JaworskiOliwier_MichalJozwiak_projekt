@@ -113,6 +113,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.SQLite">
@@ -125,6 +126,7 @@
   <ItemGroup>
     <ClCompile Include="Home.cpp" />
     <ClCompile Include="ListaPokoiForm.cpp" />
+    <ClCompile Include="PanelAdministratora.cpp" />
     <ClCompile Include="PanelPokojuForm.cpp" />
     <ClCompile Include="Pobudka.cpp" />
     <ClCompile Include="StanCzystosciForm.cpp" />
@@ -140,6 +142,9 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="ListaPokoiForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="PanelAdministratora.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="PanelPokojuForm.h">
@@ -172,6 +177,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ListaPokoiForm.resx">
       <DependentUpon>ListaPokoiForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PanelAdministratora.resx">
+      <DependentUpon>PanelAdministratora.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PanelPokojuForm.resx">
       <DependentUpon>PanelPokojuForm.h</DependentUpon>

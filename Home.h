@@ -8,7 +8,8 @@
 #include "StanCzystosciForm.h"
 #include "ListaPokoiForm.h"
 #include "DashboardService.h"
-
+#include "PanelAdministratora.h"
+using namespace Microsoft::VisualBasic;
 namespace AplikacjaHotelowa {
 
 	using namespace System;
@@ -44,6 +45,37 @@ namespace AplikacjaHotelowa {
 				dgvBudzenia->Rows->Add(row);
 			}
 		}
+		void OdswiezWiadomosci()
+		{
+			dgvWiadomosci->AutoGenerateColumns = true;
+
+			dgvWiadomosci->DataSource =
+				RezerwacjaService::PobierzWiadomosci();
+
+			dgvWiadomosci->Columns["Dzial"]->HeaderText =
+				"Dzia³";
+
+			dgvWiadomosci->Columns["Tresc"]->HeaderText =
+				"Treœæ";
+
+			dgvWiadomosci->AutoSizeColumnsMode =
+				DataGridViewAutoSizeColumnsMode::Fill;
+
+			dgvWiadomosci->ReadOnly = true;
+
+			dgvWiadomosci->AllowUserToAddRows =
+				false;
+
+			dgvWiadomosci->DefaultCellStyle->SelectionBackColor =
+				dgvWiadomosci->DefaultCellStyle->BackColor;
+
+			dgvWiadomosci->DefaultCellStyle->SelectionForeColor =
+				dgvWiadomosci->DefaultCellStyle->ForeColor;
+
+			dgvWiadomosci->ClearSelection();
+			
+
+		}
 	public:
 		Home(void)
 		{
@@ -56,13 +88,13 @@ namespace AplikacjaHotelowa {
 			PobudkaService::InitializeBase();
 
 			// konfiguracja kolumn wiadomoœci
-			this->dgvWiadomosci->ColumnCount = 3;
-			this->dgvWiadomosci->Columns[0]->Name = L"Data";
-			this->dgvWiadomosci->Columns[0]->Width = 80;
-			this->dgvWiadomosci->Columns[1]->Name = L"Dzia³";
-			this->dgvWiadomosci->Columns[1]->Width = 110;
-			this->dgvWiadomosci->Columns[2]->Name = L"Treœæ";
-			this->dgvWiadomosci->Columns[2]->AutoSizeMode = System::Windows::Forms::DataGridViewAutoSizeColumnMode::Fill;
+			//this->dgvWiadomosci->ColumnCount = 3;
+			//this->dgvWiadomosci->Columns[0]->Name = L"Data";
+			//this->dgvWiadomosci->Columns[0]->Width = 80;
+			//this->dgvWiadomosci->Columns[1]->Name = L"Dzia³";
+			//this->dgvWiadomosci->Columns[1]->Width = 110;
+			//this->dgvWiadomosci->Columns[2]->Name = L"Treœæ";
+			//this->dgvWiadomosci->Columns[2]->AutoSizeMode = System::Windows::Forms::DataGridViewAutoSizeColumnMode::Fill;
 
 			// konfiguracja kolumn budzeñ
 			this->dgvBudzenia->ColumnCount = 3;
@@ -79,9 +111,11 @@ namespace AplikacjaHotelowa {
 					this,
 					&Home::dateTimePicker1_ValueChanged);
 			OdswiezDashboard();
+			OdswiezWiadomosci();
 
 			
 		}
+	
 
 	protected:
 		/// <summary>
@@ -127,6 +161,8 @@ namespace AplikacjaHotelowa {
 		   System::Windows::Forms::Label^ lblGoscie;
 		   System::Windows::Forms::Label^ lblWolnePokoje;
 	private: System::Windows::Forms::DateTimePicker^ dateTimePicker1;
+private: System::Windows::Forms::ToolStripMenuItem^ administratorToolStripMenuItem;
+private: System::Windows::Forms::ToolStripMenuItem^ wiadomoœciToolStripMenuItem;
 
 		   System::Windows::Forms::ToolStripMenuItem^ panelPokojuToolStripMenuItem;
 
@@ -163,6 +199,8 @@ namespace AplikacjaHotelowa {
 			this->pobytToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->panelPokojuToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->listaPokoiToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->administratorToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->wiadomoœciToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->panelDashboard->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgvWiadomosci))->BeginInit();
@@ -427,10 +465,13 @@ namespace AplikacjaHotelowa {
 			// 
 			this->menuStrip1->GripMargin = System::Windows::Forms::Padding(2, 2, 0, 2);
 			this->menuStrip1->ImageScalingSize = System::Drawing::Size(32, 32);
-			this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->menuU¿ytkownikaToolStripMenuItem });
+			this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
+				this->menuU¿ytkownikaToolStripMenuItem,
+					this->administratorToolStripMenuItem
+			});
 			this->menuStrip1->Location = System::Drawing::Point(0, 0);
 			this->menuStrip1->Name = L"menuStrip1";
-			this->menuStrip1->Size = System::Drawing::Size(2386, 40);
+			this->menuStrip1->Size = System::Drawing::Size(2386, 42);
 			this->menuStrip1->TabIndex = 13;
 			// 
 			// menuU¿ytkownikaToolStripMenuItem
@@ -440,7 +481,7 @@ namespace AplikacjaHotelowa {
 					this->listaPokoiToolStripMenuItem
 			});
 			this->menuU¿ytkownikaToolStripMenuItem->Name = L"menuU¿ytkownikaToolStripMenuItem";
-			this->menuU¿ytkownikaToolStripMenuItem->Size = System::Drawing::Size(236, 36);
+			this->menuU¿ytkownikaToolStripMenuItem->Size = System::Drawing::Size(236, 38);
 			this->menuU¿ytkownikaToolStripMenuItem->Text = L"Menu u¿ytkownika";
 			// 
 			// pobytToolStripMenuItem
@@ -463,6 +504,21 @@ namespace AplikacjaHotelowa {
 			this->listaPokoiToolStripMenuItem->Size = System::Drawing::Size(261, 44);
 			this->listaPokoiToolStripMenuItem->Text = L"Lista pokoi";
 			this->listaPokoiToolStripMenuItem->Click += gcnew System::EventHandler(this, &Home::listaPokoiToolStripMenuItem_Click);
+			// 
+			// administratorToolStripMenuItem
+			// 
+			this->administratorToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->wiadomoœciToolStripMenuItem });
+			this->administratorToolStripMenuItem->Name = L"administratorToolStripMenuItem";
+			this->administratorToolStripMenuItem->Size = System::Drawing::Size(178, 38);
+			this->administratorToolStripMenuItem->Text = L"Administrator";
+			
+			// 
+			// wiadomoœciToolStripMenuItem
+			// 
+			this->wiadomoœciToolStripMenuItem->Name = L"wiadomoœciToolStripMenuItem";
+			this->wiadomoœciToolStripMenuItem->Size = System::Drawing::Size(359, 44);
+			this->wiadomoœciToolStripMenuItem->Text = L"Dodaj wiadomoœæ";
+			this->wiadomoœciToolStripMenuItem->Click += gcnew System::EventHandler(this, &Home::wiadomoœciToolStripMenuItem_Click);
 			// 
 			// Home
 			// 
@@ -578,5 +634,14 @@ namespace AplikacjaHotelowa {
 				   OdswiezDashboard();
 				   this->ActiveControl = nullptr;
 			   }
+
+private: System::Void wiadomoœciToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
+	PanelAdministratora^ panel =
+		gcnew PanelAdministratora();
+
+	panel->ShowDialog();
+	OdswiezDashboard();
+	OdswiezWiadomosci();
+}
 };
 }

@@ -4,7 +4,7 @@
 using namespace System;
 using namespace System::Data::SQLite;
 using namespace System::Collections::Generic;
-
+using namespace System::Data;
 namespace AplikacjaHotelowa {
 
     public ref class RezerwacjaService
@@ -32,13 +32,25 @@ namespace AplikacjaHotelowa {
                 SQLiteCommand^ cmd = gcnew SQLiteCommand(sql, conn);
                 cmd->ExecuteNonQuery();
 
+                String^ sqlWiadomosci =
+                    "CREATE TABLE IF NOT EXISTS WiadomosciHotelowe ("
+                    "Id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    "Data TEXT, "
+                    "Dzial TEXT, "
+                    "Tresc TEXT);";
+
+                SQLiteCommand^ cmdWiadomosci =
+                    gcnew SQLiteCommand(sqlWiadomosci, conn);
+
+                cmdWiadomosci->ExecuteNonQuery();
+
                 // aktualizujemy
                 array<String^>^ noweKolumny = {
                     "ALTER TABLE Rezerwacje ADD COLUMN TypDokumentu TEXT;",
                     "ALTER TABLE Rezerwacje ADD COLUMN NrDokumentu TEXT;",
                     "ALTER TABLE Rezerwacje ADD COLUMN MetodaPlatnosci TEXT;",
                     "ALTER TABLE Rezerwacje ADD COLUMN Kwota REAL;",
-                    "ALTER TABLE Rezerwacje ADD COLUMN StatusRezerwacji TEXT;"
+                    "ALTER TABLE Rezerwacje ADD COLUMN StatusRezerwacji TEXT;",
                     "ALTER TABLE Rezerwacje ADD COLUMN IloscGosci INTEGER;"
                 };
 
@@ -385,7 +397,73 @@ namespace AplikacjaHotelowa {
                 conn->Close();
             }
         }
+        static void DodajWiadomosc(
+            String^ dzial,
+            String^ tresc)
+        {
+            SQLiteConnection^ conn =
+                gcnew SQLiteConnection(connectionString);
 
+            try
+            {
+                conn->Open();
+
+                String^ sql =
+                    "INSERT INTO WiadomosciHotelowe "
+                    "(Data, Dzial, Tresc) "
+                    "VALUES (@data, @dzial, @tresc)";
+
+                SQLiteCommand^ cmd =
+                    gcnew SQLiteCommand(sql, conn);
+
+                cmd->Parameters->AddWithValue(
+                    "@data",
+                    DateTime::Now.ToString("dd.MM.yyyy"));
+
+                cmd->Parameters->AddWithValue(
+                    "@dzial",
+                    dzial);
+
+                cmd->Parameters->AddWithValue(
+                    "@tresc",
+                    tresc);
+
+                cmd->ExecuteNonQuery();
+            }
+            finally
+            {
+                conn->Close();
+            }
+        }
+        static DataTable^ PobierzWiadomosci()
+        {
+            DataTable^ table =
+                gcnew DataTable();
+
+            SQLiteConnection^ conn =
+                gcnew SQLiteConnection(connectionString);
+
+            try
+            {
+                conn->Open();
+
+                String^ sql =
+                    "SELECT Data, Dzial, Tresc "
+                    "FROM WiadomosciHotelowe "
+                    "ORDER BY Id DESC";
+
+                SQLiteDataAdapter^ adapter =
+                    gcnew SQLiteDataAdapter(sql, conn);
+
+                adapter->Fill(table);
+            }
+            finally
+            {
+                conn->Close();
+            }
+
+            return table;
+        }
 
     };
 }
