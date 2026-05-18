@@ -212,7 +212,15 @@ namespace AplikacjaHotelowa {
 		{
 			if (dgvLista->CurrentRow != nullptr)
 			{
-				dgvLista->CurrentRow->Cells[1]->Value = "Czysty";
+				int pokoj =
+					Convert::ToInt32(
+						dgvLista->CurrentRow->Cells[0]->Value);
+
+				RezerwacjaService::AktualizujStanCzystosci(
+					pokoj,
+					"Czysty");
+
+				OdswiezDane();
 
 				dgvLista->CurrentRow
 					->Cells[1]
@@ -228,9 +236,16 @@ namespace AplikacjaHotelowa {
 		{
 			if (dgvLista->CurrentRow != nullptr)
 			{
-				dgvLista->CurrentRow->Cells[1]->Value =
-					"Do sprz¹tania";
+				int pokoj =
+					Convert::ToInt32(
+						dgvLista->CurrentRow->Cells[0]->Value);
 
+				RezerwacjaService::
+					AktualizujStanCzystosci(
+						pokoj,
+						"Do sprz¹tania");
+
+				OdswiezDane();
 				dgvLista->CurrentRow
 					->Cells[1]
 					->Style

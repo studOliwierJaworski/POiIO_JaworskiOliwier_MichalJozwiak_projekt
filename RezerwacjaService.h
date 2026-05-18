@@ -351,6 +351,40 @@ namespace AplikacjaHotelowa {
             int randomIndex = rand->Next(dostepnePokoje->Count);
             return dostepnePokoje[randomIndex];
         }
+        static void AktualizujStanCzystosci(
+            int pokoj,
+            String^ nowyStatus)
+        {
+            SQLiteConnection^ conn =
+                gcnew SQLiteConnection(connectionString);
+
+            try
+            {
+                conn->Open();
+
+                String^ sql =
+                    "UPDATE Rezerwacje "
+                    "SET StanCzystosci = @status "
+                    "WHERE Pokoj = @pokoj";
+
+                SQLiteCommand^ cmd =
+                    gcnew SQLiteCommand(sql, conn);
+
+                cmd->Parameters->AddWithValue(
+                    "@status",
+                    nowyStatus);
+
+                cmd->Parameters->AddWithValue(
+                    "@pokoj",
+                    pokoj);
+
+                cmd->ExecuteNonQuery();
+            }
+            finally
+            {
+                conn->Close();
+            }
+        }
 
 
     };
