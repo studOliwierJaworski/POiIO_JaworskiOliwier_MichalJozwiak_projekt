@@ -1,1 +1,1 @@
-Aktualnie najnowsza wersja znajduje się w gałęzi feature/WiadomosciHotelu
+Aktualnie najnowsza wersja znajduje się w gałęzi feature/wiadomosciHotelu
