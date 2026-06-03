@@ -336,7 +336,9 @@ namespace AplikacjaHotelowa {
 			rezerwacja->StatusRezerwacji = L"Wymeldowany";
 			RezerwacjaService::Aktualizuj(rezerwacja);
 
-			MessageBox::Show(L"Goœæ zosta³ pomyœlnie wymeldowany. Pokój zosta³ zwolniony.", L"Sukces", MessageBoxButtons::OK, MessageBoxIcon::Information);
+			RezerwacjaService::AktualizujStanCzystosci(rezerwacja->Pokoj, "Do sprz¹tania");
+
+			MessageBox::Show(L"Goœæ zosta³ pomyœlnie wymeldowany. Pokój zosta³ zwolniony i oznaczony jako brudny.", L"Sukces", MessageBoxButtons::OK, MessageBoxIcon::Information);
 			this->DialogResult = System::Windows::Forms::DialogResult::OK;
 			this->Close();
 		}

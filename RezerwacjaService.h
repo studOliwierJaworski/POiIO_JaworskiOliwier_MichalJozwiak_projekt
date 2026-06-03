@@ -185,6 +185,28 @@ namespace AplikacjaHotelowa {
             return lista;
         }
 
+        // Usuwanie rezerwacji z bazy danych
+        static void Usun(int id) {
+
+            SQLiteConnection^ conn = gcnew SQLiteConnection(connectionString);
+
+            try {
+
+                conn->Open();
+                String^ sql = "DELETE FROM Rezerwacje WHERE Id = @id";
+
+                SQLiteCommand^ cmd = gcnew SQLiteCommand(sql, conn);
+                cmd->Parameters->AddWithValue("@id", id);
+
+                cmd->ExecuteNonQuery();
+            }
+            finally {
+
+                conn->Close();
+            }
+        }
+
+
         static List<Rezerwacja^>^ PobierzWymeldowaniaNaDzien(DateTime data) {
             List<Rezerwacja^>^ lista = gcnew List<Rezerwacja^>();
             SQLiteConnection^ conn = gcnew SQLiteConnection(connectionString);

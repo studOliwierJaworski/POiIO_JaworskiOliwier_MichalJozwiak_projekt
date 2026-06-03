@@ -45,6 +45,7 @@ namespace AplikacjaHotelowa {
 
 	protected:
 	private: System::Windows::Forms::DataGridView^ dataGridView2;
+	private: System::Windows::Forms::Button^ btnUsunRezerwacje;
 
 	private:
 		/// <summary>
@@ -67,9 +68,10 @@ namespace AplikacjaHotelowa {
 			this->dgvLista->ColumnHeadersHeight = 45;
 			this->dgvLista->DefaultCellStyle->Font = (gcnew System::Drawing::Font(L"Segoe UI", 12));
 			this->dgvLista->ColumnHeadersDefaultCellStyle->Font = (gcnew System::Drawing::Font(L"Segoe UI", 12, System::Drawing::FontStyle::Bold));
-			this->dgvLista->AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode::Fill;
 			this->dgvLista->ReadOnly = true;
 			this->dgvLista->AllowUserToAddRows = false;
+			this->dgvLista->SelectionMode = DataGridViewSelectionMode::FullRowSelect;
+			this->dgvLista->MultiSelect = false; // Pozwala usun¹æ tylko jedn¹ rezerwacjê na raz
 		}
 
 		// Pobranie danych z bazy przez serwis
@@ -107,8 +109,8 @@ namespace AplikacjaHotelowa {
 		void InitializeComponent(void)
 		{
 			this->dgvLista = (gcnew System::Windows::Forms::DataGridView());
-			this->dgvLista->CellDoubleClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &ZameldowaniaListaForm::dgvLista_CellDoubleClick);
 			this->dataGridView2 = (gcnew System::Windows::Forms::DataGridView());
+			this->btnUsunRezerwacje = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgvLista))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView2))->BeginInit();
 			this->SuspendLayout();
@@ -120,6 +122,7 @@ namespace AplikacjaHotelowa {
 			this->dgvLista->Name = L"dgvLista";
 			this->dgvLista->Size = System::Drawing::Size(957, 560);
 			this->dgvLista->TabIndex = 1;
+			this->dgvLista->CellDoubleClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &ZameldowaniaListaForm::dgvLista_CellDoubleClick);
 			// 
 			// dataGridView2
 			// 
@@ -128,11 +131,23 @@ namespace AplikacjaHotelowa {
 			this->dataGridView2->Size = System::Drawing::Size(240, 150);
 			this->dataGridView2->TabIndex = 0;
 			// 
+			// btnUsunRezerwacje
+			// 
+			this->btnUsunRezerwacje->BackColor = System::Drawing::Color::IndianRed;
+			this->btnUsunRezerwacje->Location = System::Drawing::Point(12, 525);
+			this->btnUsunRezerwacje->Name = L"btnUsunRezerwacje";
+			this->btnUsunRezerwacje->Size = System::Drawing::Size(138, 23);
+			this->btnUsunRezerwacje->TabIndex = 2;
+			this->btnUsunRezerwacje->Text = L"Usuñ wybran¹ rezerwacjê";
+			this->btnUsunRezerwacje->UseVisualStyleBackColor = false;
+			this->btnUsunRezerwacje->Click += gcnew System::EventHandler(this, &ZameldowaniaListaForm::btnUsunRezerwacje_Click);
+			// 
 			// ZameldowaniaListaForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(957, 560);
+			this->Controls->Add(this->btnUsunRezerwacje);
 			this->Controls->Add(this->dgvLista);
 			this->Controls->Add(this->dataGridView2);
 			this->Name = L"ZameldowaniaListaForm";
@@ -157,5 +172,32 @@ namespace AplikacjaHotelowa {
 			}
 		}
 	}
-	};
+
+private: System::Void btnUsunRezerwacje_Click(System::Object^ sender, System::EventArgs^ e) {
+
+	// jeœli zaznaczony jakiœ wiersz (rezerwacja)
+	if (this->dgvLista->SelectedRows->Count > 0) {
+
+		// bierzemy id rezerwacji
+		int idDoUsuniecia = Convert::ToInt32(this->dgvLista->SelectedRows[0]->Cells[0]->Value);
+
+		// potwierdzenie usuwania
+		System::Windows::Forms::DialogResult wynik = MessageBox::Show(L"Czy na pewno chcesz anulowaæ wybran¹ rezerwacjê?",
+			L"Potwierdzenie usuniêcia", MessageBoxButtons::YesNo, MessageBoxIcon::Warning);
+
+		// jeœli tak
+		if (wynik == System::Windows::Forms::DialogResult::Yes) {
+
+			RezerwacjaService::Usun(idDoUsuniecia);
+
+			MessageBox::Show(L"Rezerwacja zosta³a pomyœlnie usuniêta");
+
+			OdswiezDane();
+		}
+	}
+	else {
+		MessageBox::Show(L"Najpierw nale¿y oznaczyæ rezerwacjê na liœcie", L"Informacja", MessageBoxButtons::OK, MessageBoxIcon::Information);
+	}
+}
+};
 }
