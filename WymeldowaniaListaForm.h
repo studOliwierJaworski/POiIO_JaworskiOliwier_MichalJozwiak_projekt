@@ -101,40 +101,54 @@ namespace AplikacjaHotelowa {
 		void InitializeComponent(void)
 		{
 			this->dgvLista = (gcnew System::Windows::Forms::DataGridView());
-			this->dgvLista->CellDoubleClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &WymeldowaniaListaForm::dgvLista_CellDoubleClick);
 			this->panelTop = (gcnew System::Windows::Forms::Panel());
-			this->dtpData = (gcnew System::Windows::Forms::DateTimePicker());
 			this->lblData = (gcnew System::Windows::Forms::Label());
-
+			this->dtpData = (gcnew System::Windows::Forms::DateTimePicker());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgvLista))->BeginInit();
 			this->panelTop->SuspendLayout();
 			this->SuspendLayout();
-
-			// panelTop
-			this->panelTop->Dock = System::Windows::Forms::DockStyle::Top;
-			this->panelTop->Height = 50;
-			this->panelTop->Controls->Add(this->lblData);
-			this->panelTop->Controls->Add(this->dtpData);
-
-			// lblData
-			this->lblData->Text = L"Wybierz datê wymeldowania:";
-			this->lblData->Location = System::Drawing::Point(12, 16);
-			this->lblData->AutoSize = true;
-			this->lblData->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.0F, System::Drawing::FontStyle::Bold));
-
-			// dtpData
-			this->dtpData->Location = System::Drawing::Point(210, 12);
-			this->dtpData->Format = System::Windows::Forms::DateTimePickerFormat::Short;
-			this->dtpData->ValueChanged += gcnew System::EventHandler(this, &WymeldowaniaListaForm::dtpData_ValueChanged);
-
+			// 
 			// dgvLista
+			// 
 			this->dgvLista->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->dgvLista->Location = System::Drawing::Point(0, 50);
 			this->dgvLista->Name = L"dgvLista";
 			this->dgvLista->Size = System::Drawing::Size(957, 510);
 			this->dgvLista->TabIndex = 1;
-
+			this->dgvLista->CellDoubleClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &WymeldowaniaListaForm::dgvLista_CellDoubleClick);
+			// 
+			// panelTop
+			// 
+			this->panelTop->Controls->Add(this->lblData);
+			this->panelTop->Controls->Add(this->dtpData);
+			this->panelTop->Dock = System::Windows::Forms::DockStyle::Top;
+			this->panelTop->Location = System::Drawing::Point(0, 0);
+			this->panelTop->Name = L"panelTop";
+			this->panelTop->Size = System::Drawing::Size(957, 50);
+			this->panelTop->TabIndex = 2;
+			// 
+			// lblData
+			// 
+			this->lblData->AutoSize = true;
+			this->lblData->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Bold));
+			this->lblData->Location = System::Drawing::Point(12, 16);
+			this->lblData->Name = L"lblData";
+			this->lblData->Size = System::Drawing::Size(191, 15);
+			this->lblData->TabIndex = 0;
+			this->lblData->Text = L"Wybierz datê wymeldowania:";
+			// 
+			// dtpData
+			// 
+			this->dtpData->Format = System::Windows::Forms::DateTimePickerFormat::Short;
+			this->dtpData->Location = System::Drawing::Point(210, 12);
+			this->dtpData->MaxDate = System::DateTime(2027, 12, 31, 0, 0, 0, 0);
+			this->dtpData->Name = L"dtpData";
+			this->dtpData->Size = System::Drawing::Size(200, 20);
+			this->dtpData->TabIndex = 1;
+			this->dtpData->ValueChanged += gcnew System::EventHandler(this, &WymeldowaniaListaForm::dtpData_ValueChanged);
+			// 
 			// WymeldowaniaListaForm
+			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(957, 560);
@@ -143,11 +157,11 @@ namespace AplikacjaHotelowa {
 			this->Name = L"WymeldowaniaListaForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Lista wymeldowañ";
-
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgvLista))->EndInit();
 			this->panelTop->ResumeLayout(false);
 			this->panelTop->PerformLayout();
 			this->ResumeLayout(false);
+
 		}
 #pragma endregion
 

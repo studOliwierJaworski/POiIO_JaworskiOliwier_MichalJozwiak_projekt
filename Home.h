@@ -83,6 +83,9 @@ namespace AplikacjaHotelowa {
 			//
 			//TODO: W tym miejscu dodaj kod konstruktora
 			//
+			
+			this->KeyPreview = true;
+			
 			// baza danych SQLite
 			AplikacjaHotelowa::RezerwacjaService::InitializeBase();
 			PobudkaService::InitializeBase();
@@ -220,10 +223,9 @@ private: System::Windows::Forms::ToolStripMenuItem^ wiadomoœciToolStripMenuItem;
 			this->btnZameldowania->Font = (gcnew System::Drawing::Font(L"Segoe UI", 15.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(238)));
 			this->btnZameldowania->ForeColor = System::Drawing::Color::White;
-			this->btnZameldowania->Location = System::Drawing::Point(24, 523);
-			this->btnZameldowania->Margin = System::Windows::Forms::Padding(6);
+			this->btnZameldowania->Location = System::Drawing::Point(12, 272);
 			this->btnZameldowania->Name = L"btnZameldowania";
-			this->btnZameldowania->Size = System::Drawing::Size(680, 110);
+			this->btnZameldowania->Size = System::Drawing::Size(340, 57);
 			this->btnZameldowania->TabIndex = 0;
 			this->btnZameldowania->Text = L"Zameldowania";
 			this->btnZameldowania->UseVisualStyleBackColor = false;
@@ -232,10 +234,9 @@ private: System::Windows::Forms::ToolStripMenuItem^ wiadomoœciToolStripMenuItem;
 			// pictureBox1
 			// 
 			this->pictureBox1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.Image")));
-			this->pictureBox1->Location = System::Drawing::Point(24, 75);
-			this->pictureBox1->Margin = System::Windows::Forms::Padding(6);
+			this->pictureBox1->Location = System::Drawing::Point(12, 39);
 			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(680, 385);
+			this->pictureBox1->Size = System::Drawing::Size(340, 200);
 			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::Zoom;
 			this->pictureBox1->TabIndex = 1;
 			this->pictureBox1->TabStop = false;
@@ -249,10 +250,9 @@ private: System::Windows::Forms::ToolStripMenuItem^ wiadomoœciToolStripMenuItem;
 			this->btnWymeldowania->Font = (gcnew System::Drawing::Font(L"Segoe UI", 15.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(238)));
 			this->btnWymeldowania->ForeColor = System::Drawing::Color::White;
-			this->btnWymeldowania->Location = System::Drawing::Point(790, 523);
-			this->btnWymeldowania->Margin = System::Windows::Forms::Padding(6);
+			this->btnWymeldowania->Location = System::Drawing::Point(395, 272);
 			this->btnWymeldowania->Name = L"btnWymeldowania";
-			this->btnWymeldowania->Size = System::Drawing::Size(680, 110);
+			this->btnWymeldowania->Size = System::Drawing::Size(340, 57);
 			this->btnWymeldowania->TabIndex = 2;
 			this->btnWymeldowania->Text = L"Wymeldowania";
 			this->btnWymeldowania->UseVisualStyleBackColor = false;
@@ -267,10 +267,9 @@ private: System::Windows::Forms::ToolStripMenuItem^ wiadomoœciToolStripMenuItem;
 			this->btnCzystosc->Font = (gcnew System::Drawing::Font(L"Segoe UI", 15.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(238)));
 			this->btnCzystosc->ForeColor = System::Drawing::Color::White;
-			this->btnCzystosc->Location = System::Drawing::Point(24, 1198);
-			this->btnCzystosc->Margin = System::Windows::Forms::Padding(6);
+			this->btnCzystosc->Location = System::Drawing::Point(12, 623);
 			this->btnCzystosc->Name = L"btnCzystosc";
-			this->btnCzystosc->Size = System::Drawing::Size(680, 110);
+			this->btnCzystosc->Size = System::Drawing::Size(340, 57);
 			this->btnCzystosc->TabIndex = 4;
 			this->btnCzystosc->Text = L"Stan czystoœci pokoi";
 			this->btnCzystosc->UseVisualStyleBackColor = false;
@@ -285,10 +284,9 @@ private: System::Windows::Forms::ToolStripMenuItem^ wiadomoœciToolStripMenuItem;
 			this->btnRezerwacje->Font = (gcnew System::Drawing::Font(L"Segoe UI", 15.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(238)));
 			this->btnRezerwacje->ForeColor = System::Drawing::Color::White;
-			this->btnRezerwacje->Location = System::Drawing::Point(790, 1198);
-			this->btnRezerwacje->Margin = System::Windows::Forms::Padding(6);
+			this->btnRezerwacje->Location = System::Drawing::Point(395, 623);
 			this->btnRezerwacje->Name = L"btnRezerwacje";
-			this->btnRezerwacje->Size = System::Drawing::Size(680, 110);
+			this->btnRezerwacje->Size = System::Drawing::Size(340, 57);
 			this->btnRezerwacje->TabIndex = 5;
 			this->btnRezerwacje->Text = L"Rezerwacje";
 			this->btnRezerwacje->UseVisualStyleBackColor = false;
@@ -305,19 +303,19 @@ private: System::Windows::Forms::ToolStripMenuItem^ wiadomoœciToolStripMenuItem;
 			this->panelDashboard->Controls->Add(this->lblWymeldowania);
 			this->panelDashboard->Controls->Add(this->lblGoscie);
 			this->panelDashboard->Controls->Add(this->lblWolnePokoje);
-			this->panelDashboard->Location = System::Drawing::Point(1500, 23);
-			this->panelDashboard->Margin = System::Windows::Forms::Padding(6);
+			this->panelDashboard->Location = System::Drawing::Point(750, 12);
 			this->panelDashboard->Name = L"panelDashboard";
-			this->panelDashboard->Size = System::Drawing::Size(798, 575);
+			this->panelDashboard->Size = System::Drawing::Size(400, 300);
 			this->panelDashboard->TabIndex = 8;
 			// 
 			// dateTimePicker1
 			// 
 			this->dateTimePicker1->Font = (gcnew System::Drawing::Font(L"Segoe UI", 10, System::Drawing::FontStyle::Bold));
 			this->dateTimePicker1->Format = System::Windows::Forms::DateTimePickerFormat::Custom;
-			this->dateTimePicker1->Location = System::Drawing::Point(199, 87);
+			this->dateTimePicker1->Location = System::Drawing::Point(100, 45);
+			this->dateTimePicker1->Margin = System::Windows::Forms::Padding(2);
 			this->dateTimePicker1->Name = L"dateTimePicker1";
-			this->dateTimePicker1->Size = System::Drawing::Size(393, 43);
+			this->dateTimePicker1->Size = System::Drawing::Size(198, 25);
 			this->dateTimePicker1->TabIndex = 4;
 			// 
 			// lblZameldowania
@@ -325,9 +323,10 @@ private: System::Windows::Forms::ToolStripMenuItem^ wiadomoœciToolStripMenuItem;
 			this->lblZameldowania->AutoSize = true;
 			this->lblZameldowania->Font = (gcnew System::Drawing::Font(L"Segoe UI", 12, System::Drawing::FontStyle::Bold));
 			this->lblZameldowania->ForeColor = System::Drawing::Color::White;
-			this->lblZameldowania->Location = System::Drawing::Point(30, 155);
+			this->lblZameldowania->Location = System::Drawing::Point(15, 81);
+			this->lblZameldowania->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->lblZameldowania->Name = L"lblZameldowania";
-			this->lblZameldowania->Size = System::Drawing::Size(275, 45);
+			this->lblZameldowania->Size = System::Drawing::Size(141, 21);
 			this->lblZameldowania->TabIndex = 0;
 			this->lblZameldowania->Text = L"Zameldowania: 0";
 			// 
@@ -335,10 +334,9 @@ private: System::Windows::Forms::ToolStripMenuItem^ wiadomoœciToolStripMenuItem;
 			// 
 			this->lblDashboardTytul->Font = (gcnew System::Drawing::Font(L"Segoe UI", 16, System::Drawing::FontStyle::Bold));
 			this->lblDashboardTytul->ForeColor = System::Drawing::Color::White;
-			this->lblDashboardTytul->Location = System::Drawing::Point(0, 15);
-			this->lblDashboardTytul->Margin = System::Windows::Forms::Padding(6, 0, 6, 0);
+			this->lblDashboardTytul->Location = System::Drawing::Point(0, 8);
 			this->lblDashboardTytul->Name = L"lblDashboardTytul";
-			this->lblDashboardTytul->Size = System::Drawing::Size(800, 69);
+			this->lblDashboardTytul->Size = System::Drawing::Size(400, 36);
 			this->lblDashboardTytul->TabIndex = 0;
 			this->lblDashboardTytul->Text = L"Panel informacyjny";
 			this->lblDashboardTytul->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
@@ -348,9 +346,10 @@ private: System::Windows::Forms::ToolStripMenuItem^ wiadomoœciToolStripMenuItem;
 			this->lblWymeldowania->AutoSize = true;
 			this->lblWymeldowania->Font = (gcnew System::Drawing::Font(L"Segoe UI", 12, System::Drawing::FontStyle::Bold));
 			this->lblWymeldowania->ForeColor = System::Drawing::Color::White;
-			this->lblWymeldowania->Location = System::Drawing::Point(30, 259);
+			this->lblWymeldowania->Location = System::Drawing::Point(15, 135);
+			this->lblWymeldowania->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->lblWymeldowania->Name = L"lblWymeldowania";
-			this->lblWymeldowania->Size = System::Drawing::Size(288, 45);
+			this->lblWymeldowania->Size = System::Drawing::Size(147, 21);
 			this->lblWymeldowania->TabIndex = 1;
 			this->lblWymeldowania->Text = L"Wymeldowania: 0";
 			// 
@@ -359,9 +358,10 @@ private: System::Windows::Forms::ToolStripMenuItem^ wiadomoœciToolStripMenuItem;
 			this->lblGoscie->AutoSize = true;
 			this->lblGoscie->Font = (gcnew System::Drawing::Font(L"Segoe UI", 12, System::Drawing::FontStyle::Bold));
 			this->lblGoscie->ForeColor = System::Drawing::Color::White;
-			this->lblGoscie->Location = System::Drawing::Point(30, 358);
+			this->lblGoscie->Location = System::Drawing::Point(15, 186);
+			this->lblGoscie->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->lblGoscie->Name = L"lblGoscie";
-			this->lblGoscie->Size = System::Drawing::Size(154, 45);
+			this->lblGoscie->Size = System::Drawing::Size(77, 21);
 			this->lblGoscie->TabIndex = 2;
 			this->lblGoscie->Text = L"Goœcie: 0";
 			// 
@@ -370,19 +370,19 @@ private: System::Windows::Forms::ToolStripMenuItem^ wiadomoœciToolStripMenuItem;
 			this->lblWolnePokoje->AutoSize = true;
 			this->lblWolnePokoje->Font = (gcnew System::Drawing::Font(L"Segoe UI", 12, System::Drawing::FontStyle::Bold));
 			this->lblWolnePokoje->ForeColor = System::Drawing::Color::White;
-			this->lblWolnePokoje->Location = System::Drawing::Point(30, 461);
+			this->lblWolnePokoje->Location = System::Drawing::Point(15, 240);
+			this->lblWolnePokoje->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->lblWolnePokoje->Name = L"lblWolnePokoje";
-			this->lblWolnePokoje->Size = System::Drawing::Size(265, 45);
+			this->lblWolnePokoje->Size = System::Drawing::Size(134, 21);
 			this->lblWolnePokoje->TabIndex = 3;
 			this->lblWolnePokoje->Text = L"Wolne pokoje: 0";
 			// 
 			// lblWiadomosciTytul
 			// 
 			this->lblWiadomosciTytul->Font = (gcnew System::Drawing::Font(L"Segoe UI", 14, System::Drawing::FontStyle::Bold));
-			this->lblWiadomosciTytul->Location = System::Drawing::Point(1500, 619);
-			this->lblWiadomosciTytul->Margin = System::Windows::Forms::Padding(6, 0, 6, 0);
+			this->lblWiadomosciTytul->Location = System::Drawing::Point(750, 322);
 			this->lblWiadomosciTytul->Name = L"lblWiadomosciTytul";
-			this->lblWiadomosciTytul->Size = System::Drawing::Size(1500, 42);
+			this->lblWiadomosciTytul->Size = System::Drawing::Size(750, 22);
 			this->lblWiadomosciTytul->TabIndex = 9;
 			this->lblWiadomosciTytul->Text = L"Wiadomoœci hotelu";
 			// 
@@ -392,23 +392,21 @@ private: System::Windows::Forms::ToolStripMenuItem^ wiadomoœciToolStripMenuItem;
 			this->dgvWiadomosci->AllowUserToDeleteRows = false;
 			this->dgvWiadomosci->BackgroundColor = System::Drawing::Color::White;
 			this->dgvWiadomosci->ColumnHeadersHeight = 46;
-			this->dgvWiadomosci->Location = System::Drawing::Point(1500, 669);
-			this->dgvWiadomosci->Margin = System::Windows::Forms::Padding(6);
+			this->dgvWiadomosci->Location = System::Drawing::Point(750, 348);
 			this->dgvWiadomosci->Name = L"dgvWiadomosci";
 			this->dgvWiadomosci->ReadOnly = true;
 			this->dgvWiadomosci->RowHeadersVisible = false;
 			this->dgvWiadomosci->RowHeadersWidth = 82;
 			this->dgvWiadomosci->SelectionMode = System::Windows::Forms::DataGridViewSelectionMode::FullRowSelect;
-			this->dgvWiadomosci->Size = System::Drawing::Size(800, 346);
+			this->dgvWiadomosci->Size = System::Drawing::Size(400, 180);
 			this->dgvWiadomosci->TabIndex = 10;
 			// 
 			// lblBudzeniaTytul
 			// 
 			this->lblBudzeniaTytul->Font = (gcnew System::Drawing::Font(L"Segoe UI", 14, System::Drawing::FontStyle::Bold));
-			this->lblBudzeniaTytul->Location = System::Drawing::Point(1500, 1035);
-			this->lblBudzeniaTytul->Margin = System::Windows::Forms::Padding(6, 0, 6, 0);
+			this->lblBudzeniaTytul->Location = System::Drawing::Point(750, 538);
 			this->lblBudzeniaTytul->Name = L"lblBudzeniaTytul";
-			this->lblBudzeniaTytul->Size = System::Drawing::Size(800, 42);
+			this->lblBudzeniaTytul->Size = System::Drawing::Size(400, 22);
 			this->lblBudzeniaTytul->TabIndex = 11;
 			this->lblBudzeniaTytul->Text = L"Lista budzeñ";
 			// 
@@ -418,23 +416,21 @@ private: System::Windows::Forms::ToolStripMenuItem^ wiadomoœciToolStripMenuItem;
 			this->dgvBudzenia->AllowUserToDeleteRows = false;
 			this->dgvBudzenia->BackgroundColor = System::Drawing::Color::White;
 			this->dgvBudzenia->ColumnHeadersHeight = 46;
-			this->dgvBudzenia->Location = System::Drawing::Point(1500, 1085);
-			this->dgvBudzenia->Margin = System::Windows::Forms::Padding(6);
+			this->dgvBudzenia->Location = System::Drawing::Point(750, 564);
 			this->dgvBudzenia->Name = L"dgvBudzenia";
 			this->dgvBudzenia->ReadOnly = true;
 			this->dgvBudzenia->RowHeadersVisible = false;
 			this->dgvBudzenia->RowHeadersWidth = 82;
 			this->dgvBudzenia->SelectionMode = System::Windows::Forms::DataGridViewSelectionMode::FullRowSelect;
-			this->dgvBudzenia->Size = System::Drawing::Size(800, 306);
+			this->dgvBudzenia->Size = System::Drawing::Size(400, 159);
 			this->dgvBudzenia->TabIndex = 12;
 			// 
 			// pictureBox2
 			// 
 			this->pictureBox2->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox2.Image")));
-			this->pictureBox2->Location = System::Drawing::Point(790, 75);
-			this->pictureBox2->Margin = System::Windows::Forms::Padding(6);
+			this->pictureBox2->Location = System::Drawing::Point(395, 39);
 			this->pictureBox2->Name = L"pictureBox2";
-			this->pictureBox2->Size = System::Drawing::Size(680, 385);
+			this->pictureBox2->Size = System::Drawing::Size(340, 200);
 			this->pictureBox2->SizeMode = System::Windows::Forms::PictureBoxSizeMode::Zoom;
 			this->pictureBox2->TabIndex = 3;
 			this->pictureBox2->TabStop = false;
@@ -442,28 +438,26 @@ private: System::Windows::Forms::ToolStripMenuItem^ wiadomoœciToolStripMenuItem;
 			// pictureBox3
 			// 
 			this->pictureBox3->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox3.Image")));
-			this->pictureBox3->Location = System::Drawing::Point(24, 812);
-			this->pictureBox3->Margin = System::Windows::Forms::Padding(6);
+			this->pictureBox3->Location = System::Drawing::Point(12, 404);
 			this->pictureBox3->Name = L"pictureBox3";
-			this->pictureBox3->Size = System::Drawing::Size(680, 385);
+			this->pictureBox3->Size = System::Drawing::Size(340, 200);
 			this->pictureBox3->SizeMode = System::Windows::Forms::PictureBoxSizeMode::Zoom;
 			this->pictureBox3->TabIndex = 6;
 			this->pictureBox3->TabStop = false;
+			//this->pictureBox3->Click += gcnew System::EventHandler(this, &Home::pictureBox3_Click);
 			// 
 			// pictureBox4
 			// 
 			this->pictureBox4->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox4.Image")));
-			this->pictureBox4->Location = System::Drawing::Point(790, 812);
-			this->pictureBox4->Margin = System::Windows::Forms::Padding(6);
+			this->pictureBox4->Location = System::Drawing::Point(395, 404);
 			this->pictureBox4->Name = L"pictureBox4";
-			this->pictureBox4->Size = System::Drawing::Size(680, 385);
+			this->pictureBox4->Size = System::Drawing::Size(340, 200);
 			this->pictureBox4->SizeMode = System::Windows::Forms::PictureBoxSizeMode::Zoom;
 			this->pictureBox4->TabIndex = 7;
 			this->pictureBox4->TabStop = false;
 			// 
 			// menuStrip1
 			// 
-			this->menuStrip1->GripMargin = System::Windows::Forms::Padding(2, 2, 0, 2);
 			this->menuStrip1->ImageScalingSize = System::Drawing::Size(32, 32);
 			this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
 				this->menuU¿ytkownikaToolStripMenuItem,
@@ -471,7 +465,8 @@ private: System::Windows::Forms::ToolStripMenuItem^ wiadomoœciToolStripMenuItem;
 			});
 			this->menuStrip1->Location = System::Drawing::Point(0, 0);
 			this->menuStrip1->Name = L"menuStrip1";
-			this->menuStrip1->Size = System::Drawing::Size(2386, 42);
+			this->menuStrip1->Padding = System::Windows::Forms::Padding(3, 1, 0, 1);
+			this->menuStrip1->Size = System::Drawing::Size(1193, 24);
 			this->menuStrip1->TabIndex = 13;
 			// 
 			// menuU¿ytkownikaToolStripMenuItem
@@ -481,27 +476,27 @@ private: System::Windows::Forms::ToolStripMenuItem^ wiadomoœciToolStripMenuItem;
 					this->listaPokoiToolStripMenuItem
 			});
 			this->menuU¿ytkownikaToolStripMenuItem->Name = L"menuU¿ytkownikaToolStripMenuItem";
-			this->menuU¿ytkownikaToolStripMenuItem->Size = System::Drawing::Size(236, 38);
+			this->menuU¿ytkownikaToolStripMenuItem->Size = System::Drawing::Size(119, 22);
 			this->menuU¿ytkownikaToolStripMenuItem->Text = L"Menu u¿ytkownika";
 			// 
 			// pobytToolStripMenuItem
 			// 
 			this->pobytToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->panelPokojuToolStripMenuItem });
 			this->pobytToolStripMenuItem->Name = L"pobytToolStripMenuItem";
-			this->pobytToolStripMenuItem->Size = System::Drawing::Size(261, 44);
+			this->pobytToolStripMenuItem->Size = System::Drawing::Size(131, 22);
 			this->pobytToolStripMenuItem->Text = L"Pobyt";
 			// 
 			// panelPokojuToolStripMenuItem
 			// 
 			this->panelPokojuToolStripMenuItem->Name = L"panelPokojuToolStripMenuItem";
-			this->panelPokojuToolStripMenuItem->Size = System::Drawing::Size(285, 44);
+			this->panelPokojuToolStripMenuItem->Size = System::Drawing::Size(143, 22);
 			this->panelPokojuToolStripMenuItem->Text = L"Panel pokoju";
 			this->panelPokojuToolStripMenuItem->Click += gcnew System::EventHandler(this, &Home::panelPokojuToolStripMenuItem_Click);
 			// 
 			// listaPokoiToolStripMenuItem
 			// 
 			this->listaPokoiToolStripMenuItem->Name = L"listaPokoiToolStripMenuItem";
-			this->listaPokoiToolStripMenuItem->Size = System::Drawing::Size(261, 44);
+			this->listaPokoiToolStripMenuItem->Size = System::Drawing::Size(131, 22);
 			this->listaPokoiToolStripMenuItem->Text = L"Lista pokoi";
 			this->listaPokoiToolStripMenuItem->Click += gcnew System::EventHandler(this, &Home::listaPokoiToolStripMenuItem_Click);
 			// 
@@ -509,22 +504,21 @@ private: System::Windows::Forms::ToolStripMenuItem^ wiadomoœciToolStripMenuItem;
 			// 
 			this->administratorToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->wiadomoœciToolStripMenuItem });
 			this->administratorToolStripMenuItem->Name = L"administratorToolStripMenuItem";
-			this->administratorToolStripMenuItem->Size = System::Drawing::Size(178, 38);
+			this->administratorToolStripMenuItem->Size = System::Drawing::Size(92, 22);
 			this->administratorToolStripMenuItem->Text = L"Administrator";
-			
 			// 
 			// wiadomoœciToolStripMenuItem
 			// 
 			this->wiadomoœciToolStripMenuItem->Name = L"wiadomoœciToolStripMenuItem";
-			this->wiadomoœciToolStripMenuItem->Size = System::Drawing::Size(359, 44);
+			this->wiadomoœciToolStripMenuItem->Size = System::Drawing::Size(169, 22);
 			this->wiadomoœciToolStripMenuItem->Text = L"Dodaj wiadomoœæ";
 			this->wiadomoœciToolStripMenuItem->Click += gcnew System::EventHandler(this, &Home::wiadomoœciToolStripMenuItem_Click);
 			// 
 			// Home
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(12, 25);
+			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(2386, 1413);
+			this->ClientSize = System::Drawing::Size(1193, 735);
 			this->Controls->Add(this->pictureBox4);
 			this->Controls->Add(this->pictureBox3);
 			this->Controls->Add(this->pictureBox2);
@@ -540,9 +534,9 @@ private: System::Windows::Forms::ToolStripMenuItem^ wiadomoœciToolStripMenuItem;
 			this->Controls->Add(this->dgvBudzenia);
 			this->Controls->Add(this->menuStrip1);
 			this->MainMenuStrip = this->menuStrip1;
-			this->Margin = System::Windows::Forms::Padding(6);
 			this->Name = L"Home";
 			this->Text = L"Strona g³ówna";
+			this->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &Home::Home_KeyDown);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			this->panelDashboard->ResumeLayout(false);
 			this->panelDashboard->PerformLayout();
@@ -642,6 +636,34 @@ private: System::Void wiadomoœciToolStripMenuItem_Click(System::Object^ sender, 
 	panel->ShowDialog();
 	OdswiezDashboard();
 	OdswiezWiadomosci();
+}
+
+private: System::Void Home_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
+
+	// Wciœniêcie R - otwieramy tworzenie rezerwacji
+	if (e->KeyCode == Keys::R) {
+		btnRezerwacje_Click(sender, e);
+	}
+	// Z - otwieramy zameldowania
+	else if (e->KeyCode == Keys::Z) {
+		btnZameldowania_Click(sender, e);
+	}
+	// W - otwiera wymeldowania
+	else if (e->KeyCode == Keys::W) {
+		btnWymeldowania_Click(sender, e);
+	}
+	// C - otwieramy stan czystoœci
+	else if (e->KeyCode == Keys::C) {
+		btnCzystosc_Click(sender, e);
+	}
+	// P - lista pokoi
+	else if (e->KeyCode == Keys::P) {
+		listaPokoiToolStripMenuItem_Click(sender, e);
+	}
+	// A - panel administratora (wiadomoœci hotelowe)
+	else if (e->KeyCode == Keys::A) {
+		wiadomoœciToolStripMenuItem_Click(sender, e);
+	}
 }
 };
 }

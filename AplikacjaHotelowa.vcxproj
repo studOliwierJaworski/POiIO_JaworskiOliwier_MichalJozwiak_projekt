@@ -193,6 +193,9 @@
     <EmbeddedResource Include="TworzenieRezerwacjiForm.resx">
       <DependentUpon>TworzenieRezerwacjiForm.h</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="WymeldowaniaListaForm.resx">
+      <DependentUpon>WymeldowaniaListaForm.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ZameldowaniaListaForm.resx">
       <DependentUpon>ZameldowaniaListaForm.h</DependentUpon>
     </EmbeddedResource>
