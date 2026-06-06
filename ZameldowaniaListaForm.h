@@ -97,7 +97,21 @@ namespace AplikacjaHotelowa {
 					ladnyStatus,
 					r->IloscGosci.ToString()
 				};
-				this->dgvLista->Rows->Add(row);
+
+
+
+				int rowIndex = this->dgvLista->Rows->Add(row);
+
+				// Kolorowanie komórki ze statusem 
+				if (r->StatusRezerwacji == "Zameldowany") {
+					this->dgvLista->Rows[rowIndex]->Cells[5]->Style->BackColor = System::Drawing::Color::LightGreen;
+				}
+				else if (r->StatusRezerwacji == "Wymeldowany") {
+					this->dgvLista->Rows[rowIndex]->Cells[5]->Style->BackColor = System::Drawing::Color::LightCoral;
+				}
+				else { // Oczekuj¹ca
+					this->dgvLista->Rows[rowIndex]->Cells[5]->Style->BackColor = System::Drawing::Color::LightSkyBlue;
+				}
 			}
 		}
 
