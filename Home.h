@@ -34,12 +34,29 @@ namespace AplikacjaHotelowa {
 				PobudkaService::PobierzWszystkie();
 
 			for each (Pobudka ^ p in lista)
-			{
-				array<String^>^ row =
-				{
-					p->Pokoj.ToString(),
-					p->Godzina,
-					"Aktywna"
+			{ 
+			
+					String^ status;
+
+					if (p->Data.Date == DateTime::Now.Date)
+					{
+						status = "Aktywna";
+					}
+					else if (p->Data.Date > DateTime::Now.Date)
+					{
+						status = "Zaplanowana";
+					}
+					else
+					{
+						status = "Przeterminowana";
+					}
+
+					array<String^>^ row =
+					{
+						p->Pokoj.ToString(),
+						p->Data.ToString("dd.MM.yyyy"),
+						p->Godzina,
+						status
 				};
 
 				dgvBudzenia->Rows->Add(row);
@@ -100,13 +117,20 @@ namespace AplikacjaHotelowa {
 			//this->dgvWiadomosci->Columns[2]->AutoSizeMode = System::Windows::Forms::DataGridViewAutoSizeColumnMode::Fill;
 
 			// konfiguracja kolumn budzeñ
-			this->dgvBudzenia->ColumnCount = 3;
+			this->dgvBudzenia->ColumnCount = 4;
+
 			this->dgvBudzenia->Columns[0]->Name = L"Pokój";
-			this->dgvBudzenia->Columns[0]->Width = 70;
-			this->dgvBudzenia->Columns[1]->Name = L"Godzina";
+			this->dgvBudzenia->Columns[0]->Width = 60;
+
+			this->dgvBudzenia->Columns[1]->Name = L"Data";
 			this->dgvBudzenia->Columns[1]->Width = 90;
-			this->dgvBudzenia->Columns[2]->Name = L"Status";
-			this->dgvBudzenia->Columns[2]->AutoSizeMode = System::Windows::Forms::DataGridViewAutoSizeColumnMode::Fill;
+
+			this->dgvBudzenia->Columns[2]->Name = L"Godzina";
+			this->dgvBudzenia->Columns[2]->Width = 80;
+
+			this->dgvBudzenia->Columns[3]->Name = L"Status";
+			this->dgvBudzenia->Columns[3]->AutoSizeMode =
+				System::Windows::Forms::DataGridViewAutoSizeColumnMode::Fill;
 
 			OdswiezListePobudek();
 			this->dateTimePicker1->ValueChanged +=
@@ -579,6 +603,7 @@ private: System::Windows::Forms::ToolStripMenuItem^ wiadomoœciToolStripMenuItem;
 			ZameldowaniaListaForm^ listaForm = gcnew ZameldowaniaListaForm();
 			listaForm->ShowDialog();
 			OdswiezDashboard();
+			OdswiezListePobudek();
 		}
 
 		System::Void btnWymeldowania_Click(System::Object^ sender, System::EventArgs^ e)

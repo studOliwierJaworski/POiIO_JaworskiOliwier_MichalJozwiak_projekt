@@ -1,6 +1,7 @@
 #pragma once
 #include "RezerwacjaService.h"
 #include "SzczegolyRezerwacjiForm.h"
+#include "PobudkaService.h"
 
 namespace AplikacjaHotelowa {
 
@@ -199,12 +200,24 @@ private: System::Void btnUsunRezerwacje_Click(System::Object^ sender, System::Ev
 		System::Windows::Forms::DialogResult wynik = MessageBox::Show(L"Czy na pewno chcesz anulowaæ wybran¹ rezerwacjê?",
 			L"Potwierdzenie usuniêcia", MessageBoxButtons::YesNo, MessageBoxIcon::Warning);
 
-		// jeœli tak
-		if (wynik == System::Windows::Forms::DialogResult::Yes) {
+		// jeœli tak usunie zameldowanie i wszystkie pobudki dla goscia
+		if (wynik == System::Windows::Forms::DialogResult::Yes)
+		{
+			Rezerwacja^ r =
+				RezerwacjaService::PobierzPoId(
+					idDoUsuniecia);
 
-			RezerwacjaService::Usun(idDoUsuniecia);
+			if (r != nullptr)
+			{
+				PobudkaService::UsunWszystkieDlaPokoju(
+					r->Pokoj);
+			}
 
-			MessageBox::Show(L"Rezerwacja zosta³a pomyœlnie usuniêta");
+			RezerwacjaService::Usun(
+				idDoUsuniecia);
+
+			MessageBox::Show(
+				L"Rezerwacja zosta³a pomyœlnie usuniêta");
 
 			OdswiezDane();
 		}

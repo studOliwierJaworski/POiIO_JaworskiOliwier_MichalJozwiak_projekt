@@ -140,5 +140,79 @@ namespace AplikacjaHotelowa {
 
             return lista;
         }
+        // Usuwanie pobudki
+        static bool Usun(
+            String^ imie,
+            String^ nazwisko,
+            int pokoj,
+            DateTime data)
+        {
+            SQLiteConnection^ conn =
+                gcnew SQLiteConnection(connectionString);
+
+            try
+            {
+                conn->Open();
+
+                String^ sql =
+                    "DELETE FROM Pobudki "
+                    "WHERE Imie=@imie "
+                    "AND Nazwisko=@nazwisko "
+                    "AND Pokoj=@pokoj " 
+                    "AND Data=@data ";
+
+                SQLiteCommand^ cmd =
+                    gcnew SQLiteCommand(sql, conn);
+
+                cmd->Parameters->AddWithValue(
+                    "@imie", imie);
+
+                cmd->Parameters->AddWithValue(
+                    "@nazwisko", nazwisko);
+
+                cmd->Parameters->AddWithValue(
+                    "@pokoj", pokoj);
+
+                cmd->Parameters->AddWithValue(
+                    "@data",
+                    data.ToString("yyyy-MM-dd"));
+
+                int usuniete =
+                    cmd->ExecuteNonQuery();
+
+                return usuniete > 0;
+            }
+            finally
+            {
+                conn->Close();
+            }
+        }
+        static void UsunWszystkieDlaPokoju(
+            int pokoj)
+        {
+            SQLiteConnection^ conn =
+                gcnew SQLiteConnection(connectionString);
+
+            try
+            {
+                conn->Open();
+
+                String^ sql =
+                    "DELETE FROM Pobudki "
+                    "WHERE Pokoj=@pokoj";
+
+                SQLiteCommand^ cmd =
+                    gcnew SQLiteCommand(sql, conn);
+
+                cmd->Parameters->AddWithValue(
+                    "@pokoj", pokoj);
+
+                cmd->ExecuteNonQuery();
+            }
+            finally
+            {
+                conn->Close();
+            }
+        }
     };
 }

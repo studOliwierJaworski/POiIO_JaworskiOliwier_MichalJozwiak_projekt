@@ -117,7 +117,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.SQLite">
-      <HintPath>..\POiIO_JaworskiOliwier_MichalJozwiak_projekt-feature-wiadomosciHotelu\System.Data.SQLite.dll</HintPath>
+      <HintPath>\\Mac\Home\Desktop\stub.system.data.sqlite.core.netframework.1.0.119 (1)\lib\net46\System.Data.SQLite.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
