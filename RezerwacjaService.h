@@ -470,7 +470,7 @@ namespace AplikacjaHotelowa {
                 conn->Open();
 
                 String^ sql =
-                    "SELECT Data, Dzial, Tresc "
+                    "SELECT Id, Data, Dzial, Tresc "
                     "FROM WiadomosciHotelowe "
                     "ORDER BY Id DESC";
 
@@ -485,6 +485,32 @@ namespace AplikacjaHotelowa {
             }
 
             return table;
+        }
+        static void UsunWiadomosc(int id)
+        {
+            SQLiteConnection^ conn =
+                gcnew SQLiteConnection(connectionString);
+
+            try
+            {
+                conn->Open();
+
+                String^ sql =
+                    "DELETE FROM WiadomosciHotelowe "
+                    "WHERE Id=@id";
+
+                SQLiteCommand^ cmd =
+                    gcnew SQLiteCommand(sql, conn);
+
+                cmd->Parameters->AddWithValue(
+                    "@id", id);
+
+                cmd->ExecuteNonQuery();
+            }
+            finally
+            {
+                conn->Close();
+            }
         }
 
     };
